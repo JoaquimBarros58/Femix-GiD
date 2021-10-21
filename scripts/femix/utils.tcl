@@ -58,7 +58,6 @@ proc Femix::GetModelName {{file ""}} {
         set n [expr [String::NumCharsOccur "_" $file] - $nu]
         return [String::GetUpTo $file "_" $n]
     }
-    
 }
 
 # Gets the project directory.
@@ -74,7 +73,7 @@ proc Femix::GetModelName {{file ""}} {
 #
 proc Femix::GetProjecDir {{file ""}} {
     if {$file == ""} {
-        return "[GiD_Info Project ModelName].gid"
+        return [GiD_Info Project ModelName].gid
     } else {
         return [file dirname $file]; 
     }

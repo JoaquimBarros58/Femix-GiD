@@ -108,8 +108,6 @@ proc String::GetList {str {delimeter " "}} {
 #    >> aa_bb
 #    
 proc String::GetUpTo {s c n} {
-    puts $n
-    
     set name ""
     
     set count 0
