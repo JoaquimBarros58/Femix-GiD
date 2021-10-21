@@ -89,7 +89,7 @@ proc Femix::InitGlobalVariables {dir} {
     # Set mesh renumbering method
     set femixVars(RenumberMethod) [GiD_Info variables RenumberMethod]
     # User environment
-    set femixVars(DevMode) "dev" ; #can be dev or release
+    set femixVars(DevMode) "release" ; #can be dev or release
     # Default group
     set femixVars(Group) Default ; 
     # Variables from the problemtype definition (femix.xml)
