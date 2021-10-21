@@ -291,7 +291,8 @@ proc Import::PvaResults {rtype mesh {file ""}} {
         unset -nocomplain lines
     }
 
-    Import::Close
+    # Import::Close
+    close $fres
 
     return 0
 }

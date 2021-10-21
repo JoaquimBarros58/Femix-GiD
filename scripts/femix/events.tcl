@@ -222,6 +222,7 @@ proc Event::ImportPva {} {
 
         # Imports the file
         set error [Import::PvaResults $rtype $mesh $file]
+
         if {$error == 0} {
             # Activates the postprocessing environment.
             GiD_Process Mescape Postprocess
