@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Main configuration file of the data tree, XML-based.
+    ====================================================
+
+    The main configuration file in XML format contains the definition of all the 
+    data (except the geometry) necessary to perform an analysis. It is defined 
+    in XML format and contains all the definition of all the data that defines 
+    the analysis like boundary conditions, loads, materials, loadcases, etc.
+
+    Some nodes are defined in different xml files for sake of simplicity.
+-->
+
+<femix_data version='1.0'>
+    <!-- Tree styles and options -->
+    <style show_menubutton_about='0' show_menubutton_search='1'></style>
+    <display_options frame_width="250" is_frame_open="1" />
+   
+    <!-- Units -->
+    <units>  
+        <!--by now it is compulsory define this node if units are used (could be empty if defaults are enougth)-->
+    </units>
+
+    <container n="units" pn="Units" icon="units" help="Units definition">
+        <value n='units_mesh' pn='Geometry units' unit_mesh_definition="1" />
+        <value n='units_system' pn='Units system' units_system_definition="1">
+          <dependencies node="//*[@unit_definition or @unit_mesh_definition='1']" att1='change_units_system' v1='{@v}'/> 
+        </value>
+        <container n="basic_units" pn="Basic units" icon="units" state="normal">
+            <value n="units_length" pn="Length" unit_definition="L" />
+            <value n="units_mass" pn="Mass" unit_definition="M" />
+            <value n="units_force" pn="Force" unit_definition="F" />
+            <value n="units_pressure" pn="Pressure" unit_definition="P" />
+            <value n="units_temperature" pn="Temperature" unit_definition="Temp" />
+            <value n="units_time" pn="Time" unit_definition="T" />
+        </container>
+    </container>
+
+    <!-- Main parameters -->
+    <include path="xml/main.xml" />
+
+    <!-- Geometry node -->
+    <container n="geometries" pn="Geometry" icon="sections" help="Create a section">
+        <include path="xml/geometries/area.xml" />
+        <include path="xml/geometries/frame2d.xml" />
+        <include path="xml/geometries/frame3d.xml" />
+        <include path="xml/geometries/laminate.xml" />
+    </container> 
+
+    <!-- Integration node -->
+    <container n="integrations" pn="Integrations" icon="rules" help="Create a integration rule">      
+         <include path="xml/rules/rule1d.xml" />
+         <include path="xml/rules/rule2d.xml" />
+         <include path="xml/rules/rule3d.xml" />
+    </container> 
+
+    <!-- Parts node -->
+    <include path="xml/parts.xml" />
+
+    <!-- Support node -->
+    <container n="bcs" pn="Boundary Conditions" icon="supports.png">
+        <include path="xml/bcs.xml" />
+    </container>
+
+    <!-- Loads node -->
+    <container n="loads" pn="Loads" icon="loads.gif">
+        <include path="xml/loads/point.xml" />
+        <include path="xml/loads/edge.xml" />
+        <include path="xml/loads/face.xml" />
+        <include path="xml/loads/temp.xml" />
+    </container>
+
+    <!-- Materials node -->
+    <container n="materials" pn="Materials" icon="materials.gif" help="Materials database">
+        <include path="xml/materials/liniso.xml" /> 
+        <include path="xml/materials/nlmm101.xml" /> 
+        <include path="xml/materials/nlmm104.xml" /> 
+        <include path="xml/materials/nlmm111.xml" /> 
+        <include path="xml/materials/nlmm201.xml" /> 
+        <include path="xml/materials/nlmm301.xml" />
+        <include path="xml/materials/nlmm305.xml" /> 
+    </container> 
+
+    <!-- Load cases node -->
+    <container n="lcases" pn="Load Cases" icon="lcases" help="Create a load case.">
+        <include path="xml/lcase.xml" />
+    </container> 
+
+    <!-- Procs -->
+    <procs>
+    <proc n='GetMaterials' args='args'>
+        <![CDATA[
+        SpdAux::GetMaterials $domNode $args
+        ]]>
+    </proc>
+
+    <!-- <proc n='EditDatabaseList' args='args'>
+        <![CDATA[
+        Cmas2d::EditDatabaseList $domNode $dict $boundary_conds $args
+        ]]>
+    </proc> -->
+    <proc n='GetGeom1D' args='args'>
+        <![CDATA[
+        SpdAux::GetGeom1D $domNode $args
+        ]]>
+    </proc>
+    <proc n='GetGeom2D' args='args'>
+        <![CDATA[
+        SpdAux::GetGeom2D $domNode $args
+        ]]>
+    </proc>
+    <proc n='GetIntegrations' args='args'>
+        <![CDATA[
+        SpdAux::GetIntegrations $domNode $args
+        ]]>
+    </proc>
+    <proc n='GetGroups' args='args'>
+        <![CDATA[
+        SpdAux::GetGroups
+        ]]>
+    </proc>
+    <proc n='GetLoadCases' args='args'>
+        <![CDATA[
+        SpdAux::GetLoadCases $domNode $args
+        ]]>
+    </proc>
+    </procs>
+</femix_data>

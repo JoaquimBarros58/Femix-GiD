@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<condition n="gravity" pn="Gravity Loads" icon="loads">
+    <value n="enable" pn="Enable" values="Yes,No" v="No" help="If enabled the gravity loads will be considered." />>
+    <value n="case" pn="Load Case" editable='0' values_tree="[GetLoadCases]" />
+    <value n="x-accel" pn="X-Acceleration" v="0.0" unit_magnitude="Acceleration" units="m/s^2" 
+        help="Acceleration of gravity in global X direction." />
+    <value n="y-accel" pn="Y-Acceleration" v="0.0" unit_magnitude="Acceleration" units="m/s^2" 
+        help="Acceleration of gravity in global Y direction." />
+    <value n="z-accel" pn="Z-Acceleration" v="0.0" unit_magnitude="Acceleration" units="m/s^2" 
+        help="Acceleration of gravity in global Z direction." />
+</condition>

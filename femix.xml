@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Infoproblemtype version="1.0">
+  <Program>
+    <Name>Femix</Name>
+    <Version>3.0.0 (Beta)</Version>   
+    <CheckMinimumGiDVersion>15.0.2</CheckMinimumGiDVersion>
+    <EnableDeprecated>0</EnableDeprecated>
+    <CustomLibAutomatic>1</CustomLibAutomatic>
+    <CustomLibNativeGroups>1</CustomLibNativeGroups>
+    <ImageFileBrowser>images/ico.png</ImageFileBrowser>
+    <ShortDescription>Femix Problem type for GiD.</ShortDescription>
+    <Description>Femix - Linear and Nonlinear Analysis</Description>
+    <NewsInVersion version="3.0.0 (Beta)" date="2021-05-03">
+      *  Initial release.
+    </NewsInVersion>
+    <ValidatePassword></ValidatePassword>
+    <!-- <MsgcatRoot>resources/msgs</MsgcatRoot> -->
+  </Program>
+</Infoproblemtype>

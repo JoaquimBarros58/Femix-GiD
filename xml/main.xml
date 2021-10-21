@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<container n="main_parameters" pn="Main Parameters" icon="main"> 
+    <value n="analysis_type" pn="Analysis Type" values="Static" v="Static" show_in_window="0" />
+   
+    <!-- Phase window -->
+    <container n="phases" pn="Number of Phases" icon="main">
+        <value n="phases" pn="Phases" values="Yes,No" v="No">
+            <dependencies value="Yes" node="../value[@n='num_phases']" att1="state" v1="normal"/>
+            <dependencies value="No" node="../value[@n='num_phases']" att1="state" v1="hidden" />
+        </value>
+        <value n="num_phases" pn="Number of Phases" v="1" state="normal" />
+    </container>
+
+    <!-- Matrix storage and solver  -->
+    <container n="storage" pn="Matrix Storage and Solver" actualize="1" icon="main">
+        <value n="technique" pn="Storage Technique" 
+            values="SYMMETRIC_NONCONSTANT_SEMIBAND,SYMMETRIC_SPARSE" 
+            v="SYMMETRIC_NONCONSTANT_SEMIBAND"
+            actualize_tree="1"
+            help="Stiffness Matrix Storage Technique">
+            <dependencies value='SYMMETRIC_SPARSE' node="../value[@n='system']" att1="state" v1="normal" />
+            <dependencies value='SYMMETRIC_SPARSE' node="../value[@n='decay']" att1="state" v1="normal" />
+
+            <dependencies value='SYMMETRIC_NONCONSTANT_SEMIBAND' node="../value[@n='system']" att1="state" v1="hidden" />
+            <dependencies value='SYMMETRIC_NONCONSTANT_SEMIBAND' node="../value[@n='decay']" att1="state" v1="hidden" />
+        </value>
+
+        <value n="system" pn="System of Linear Eq. Algorithm" 
+            values="ITERATIVE_JPCG,ITERATIVE_ICFPCG"
+            v="ITERATIVE_JPCG"
+            state="hidden"
+         />
+        <value n="decay" pn="Preconditioned Residual Decay" 
+            v="1.0e-12"
+            state="hidden"
+         />
+    </container>
+
+    <!-- Material nonlinear problem window -->
+    <container n="nlprob" pn="Nonlinear Problem" icon="main">
+        <value n="geo_nonlinear_prob" pn="Geometrically Nonlinear Problem" values="Yes,No" v="No" actualize_tree="1">
+            <!-- If yes we will show the fields -->
+            <dependencies value='Yes' node="../value[@n='iter_algor']" att1="state" v1="normal"/>
+            <dependencies value='Yes' node="../value[@n='conv_criterion']" att1="state" v1="normal"/>
+            <dependencies value='Yes' node="../value[@n='tol_comb']" att1="state" v1="normal"/>
+            <dependencies value='Yes' node="../value[@n='max_comb']" att1="state" v1="normal"/>
+            <dependencies value='Yes' node="../value[@n='restart']" att1="state" v1="normal"/>
+            <dependencies value='Yes' node="../value[@n='line_search']" att1="state" v1="normal"/>
+            <dependencies value='Yes' node="../value[@n='path_behavior']" att1="state" v1="normal"/>
+            <!-- If no we will hide the fields -->
+            <dependencies value='No' node="../value[@n='iter_algor']" att1="state" v1="hidden"/>
+            <dependencies value='No' node="../value[@n='conv_criterion']" att1="state" v1="hidden"/>
+            <dependencies value='No' node="../value[@n='tol_comb']" att1="state" v1="hidden"/>
+            <dependencies value='No' node="../value[@n='max_comb']" att1="state" v1="hidden"/>
+            <dependencies value='No' node="../value[@n='restart']" att1="state" v1="hidden"/>
+            <dependencies value='No' node="../value[@n='line_search']" att1="state" v1="hidden"/>
+            <dependencies value='No' node="../value[@n='path_behavior']" att1="state" v1="hidden"/>
+        </value>
+
+        <value n="mat_nonlinear_prob" pn="Material Nonlinear Problem" values="Yes,No" v="No" actualize_tree="1" >
+            <!-- If yes we will show the fields -->
+            <dependencies value='Yes' node="../value[@n='iter_algor']" att1="state" v1="normal"/>
+            <dependencies value='Yes' node="../value[@n='conv_criterion']" att1="state" v1="normal"/>
+            <dependencies value='Yes' node="../value[@n='tol_comb']" att1="state" v1="normal"/>
+            <dependencies value='Yes' node="../value[@n='max_comb']" att1="state" v1="normal"/>
+            <dependencies value='Yes' node="../value[@n='restart']" att1="state" v1="normal"/>
+            <dependencies value='Yes' node="../value[@n='line_search']" att1="state" v1="normal"/>
+            <dependencies value='Yes' node="../value[@n='path_behavior']" att1="state" v1="normal"/>
+            <!-- If no we will hide the fields -->
+            <dependencies value='No' node="../value[@n='iter_algor']" att1="state" v1="hidden"/>
+            <dependencies value='No' node="../value[@n='conv_criterion']" att1="state" v1="hidden"/>
+            <dependencies value='No' node="../value[@n='tol_comb']" att1="state" v1="hidden"/>
+            <dependencies value='No' node="../value[@n='max_comb']" att1="state" v1="hidden"/>
+            <dependencies value='No' node="../value[@n='restart']" att1="state" v1="hidden"/>
+            <dependencies value='No' node="../value[@n='line_search']" att1="state" v1="hidden"/>
+            <dependencies value='No' node="../value[@n='path_behavior']" att1="state" v1="hidden"/>
+        </value>
+      
+        <value n="iter_algor" pn="Iterative Algorithm" 
+            values="NEWTON_RAPHSON_STD,NEWTON_RAPHSON_MOD_1,NEWTON_RAPHSON_MOD_2,NEWTON_RAPHSON_MOD_3,NEWTON_RAPHSON_MOD_4"
+            v="NEWTON_RAPHSON_STD"
+            state="hidden"
+         />
+        <value n="conv_criterion" pn="Convergence Criterion" 
+            values="DISPLACEMENT_NORM,FORCE_NORM,ENERGY"
+            v="FORCE_NORM"
+            state="hidden"
+        />
+        <value n="tol_comb" pn="Tolerance in Each Combination" v="1.0e-3" state="hidden" />
+        <value n="max_comb" pn="Maximum Number of Iterations in Each Combination" v="100" state="hidden" />
+        <value n="restart" pn="Number of Combinations Before Restart" v="0" state="hidden" />
+        <value n="line_search" pn="Line Search" values="Yes,No" v="No" state="hidden" />
+        <value n="path_behavior" pn="Path Behavior" 
+            values="INDEPENDENT,DEPENDENT" 
+            v="INDEPENDENT"
+            state="hidden"
+        />
+    </container>
+</container>

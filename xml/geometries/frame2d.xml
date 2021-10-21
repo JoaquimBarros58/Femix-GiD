@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<blockdata n='geometry' name='Frame 2D' sequence='1' editable_name='unique' icon="sections" help="Beam 2d cross-section.">     
+    <value n="type" pn="Type" v="_CS_2D" state="hidden" />
+    <value n="area" pn="Area" v="0.06" unit_magnitude="L^2" units="m^2" />
+    <value n="shape" pn="Shape factor" v="1.0" help="Shape factor" />
+    <value n="moment" pn="Moment of inertia" v="0.0008" unit_magnitude="L^4" units="m^4" />
+    <value n="height" pn="Cross section height" v="0.4" unit_magnitude="L" units="m" />
+</blockdata>  

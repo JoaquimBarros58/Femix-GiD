@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<blockdata n="material" name="NLMM301" sequence="1" editable_name="unique" icon="interface" help="Nonlinear interface material" morebutton="0">     
+    <value n="type" pn="Type" v="_NLMM301" state="hidden" />
+
+    <!-- Columns C-H -->
+    <value n="s0" pn="s0" v="0.003" unit_magnitude="L" units="mm" help="Slip at the end of the linear bond stress-slip relationship" />
+    <value n="sm" pn="sm" v="0.17" unit_magnitude="L" units="mm" help="Slip at peak bond stress." />
+    <value n="tm" pn="tm" v="3.0" unit_magnitude="P" units="MPa" help="Peak bond stress." />
+    <value n="a" pn="α" v="0.9" help="Parameter used in the definition of the pre-peak bond stress-slip relationship." />
+    <value n="b" pn="β" v="2.0" help="Parameter used in the definition of the post-peak bond stress-slip relationship." />
+    <value n="kn" pn="Kn" v="1.0e6" unit_magnitude="P" units="MPa" help="Normal stiffness." />
+</blockdata>

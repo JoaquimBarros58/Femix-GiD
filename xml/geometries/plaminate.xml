@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<blockdata n="geometry" name="Patt. Laminate" sequence="1" editable_name="unique" icon="sections" help="Pattern laminate thickness.">     
+    <value n="type" pn="Type" v="plaminate" state="hidden" />
+
+    <value n="thick_num" pn="Number of nodes" values="4,8" v="4" actualize_tree="1">
+        <dependencies value="4" node="../value[@n='thick5']" att1="state" v1="hidden" />
+        <dependencies value="4" node="../value[@n='thick6']" att1="state" v1="hidden" />
+        <dependencies value="4" node="../value[@n='thick7']" att1="state" v1="hidden" />
+        <dependencies value="4" node="../value[@n='thick8']" att1="state" v1="hidden" />
+
+        <dependencies value="8" node="../value[@n='thick5']" att1="state" v1="normal" />
+        <dependencies value="8" node="../value[@n='thick6']" att1="state" v1="normal" />
+        <dependencies value="8" node="../value[@n='thick7']" att1="state" v1="normal" />
+        <dependencies value="8" node="../value[@n='thick8']" att1="state" v1="normal" />
+    </value>
+
+    <value n="thick1" pn="Thickness 1" v="0.0" state="normal" unit_magnitude="L" units="m" />
+    <value n="thick2" pn="Thickness 2" v="0.0" state="normal" unit_magnitude="L" units="m" />
+    <value n="thick3" pn="Thickness 3" v="0.0" state="normal" unit_magnitude="L" units="m" />
+    <value n="thick4" pn="Thickness 4" v="0.0" state="normal" unit_magnitude="L" units="m" />
+    <value n="thick5" pn="Thickness 5" v="0.0" state="hidden" unit_magnitude="L" units="m" />
+    <value n="thick6" pn="Thickness 6" v="0.0" state="hidden" unit_magnitude="L" units="m" />
+    <value n="thick7" pn="Thickness 7" v="0.0" state="hidden" unit_magnitude="L" units="m" />
+    <value n="thick8" pn="Thickness 8" v="0.0" state="hidden" unit_magnitude="L" units="m" />
+</blockdata>

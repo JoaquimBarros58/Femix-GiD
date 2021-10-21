@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<blockdata n="geometry" name="Patt. Frame 2D" sequence="1" editable_name="unique" icon="sections" help="Pattern Frame 2D cross-section.">     
+    <value n="type" pn="Type" v="pframe2d" state="hidden" />
+
+    <value n="area_1" pn="Area 1" v="100.0" unit_magnitude="L^2" units="m^2" />
+    <value n="shape_1" pn="Shape factor 1" v="1.0" help="Shape factor" />
+    <value n="moment_1" pn="Moment of inertia 1" v="1.0e-8" unit_magnitude="L^4" units="m^4" />
+    <value n="height_1" pn="Cross section height 1" v="200.0" unit_magnitude="L" units="m" />
+    <value n="area_2" pn="Area 2" v="100.0" unit_magnitude="L^2" units="m^2" />
+    <value n="shape_2" pn="Shape factor 2" v="1.0" help="Shape factor" />
+    <value n="moment_2" pn="Moment of inertia 2" v="1.0e-8" unit_magnitude="L^4" units="m^4" />
+    <value n="height_2" pn="Cross section height 2" v="200.0" unit_magnitude="L" units="m" />
+</blockdata>

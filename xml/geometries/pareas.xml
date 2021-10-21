@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<blockdata n="geometry" name="Patt. Areas" sequence="1" editable_name="unique" icon="sections" help="Pattern cross-section areas.">     
+    <value n="type" pn="Type" v="pareas" state="hidden" />
+    <value n="area1" pn="Area 1" v="0.0" unit_magnitude="L^2" units="m^2" />
+    <value n="area2" pn="Area 2" v="0.0" unit_magnitude="L^2" units="m^2" />
+</blockdata>

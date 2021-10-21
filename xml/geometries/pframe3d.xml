@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<blockdata n="geometry" name="Patt. Frame 3D" sequence="1" editable_name="unique" icon="sections" help="Pattern Frame 3D cross-section.">     
+    <value n="type" pn="Type" v="pframe3d" state="hidden" />
+
+    <value n="area_1" pn="Area 1" v="100.0" unit_magnitude="L^2" units="m^2" />
+    <value n="shapeI2_1" pn="Shape factor I2" v="1.0" />
+    <value n="shapeI3_1" pn="Shape factor I3" v="1.0" />
+    <value n="torsion_1" pn="Torsional constant" v="1.0" />
+    <value n="momentI2_1" pn="Moment of inertia I2" v="1.0e-8" unit_magnitude="L^4" units="m^4" />
+    <value n="momentI3_1" pn="Moment of inertia I3" v="1.0e-8" unit_magnitude="L^4" units="m^4" />
+    <value n="localI2_1" pn="Shear I2" v="1.0" help="Local coordinate of the shear center I2" />
+    <value n="localI3_1" pn="Shear I3" v="1.0" help="Local coordinate of the shear center I3" />
+    <value n="heightI2_1" pn="Cross section height I2" v="200.0" unit_magnitude="L" units="m" />
+    <value n="heightI3_1" pn="Cross section height I3" v="200.0" unit_magnitude="L" units="m" />   
+    <value n="angle_1" pn="Angle" v="0.7" unit_magnitude="Angle" units="rad" />
+
+    <value n="area_2" pn="Area 2" v="100.0" unit_magnitude="L^2" units="m^2" />
+    <value n="shapeI2_2" pn="Shape factor I2" v="1.0" />
+    <value n="shapeI3_2" pn="Shape factor I3" v="1.0" />
+    <value n="torsion_2" pn="Torsional constant" v="1.0" />
+    <value n="momentI2_2" pn="Moment of inertia I2" v="1.0e-8" unit_magnitude="L^4" units="m^4" />
+    <value n="momentI3_2" pn="Moment of inertia I3" v="1.0e-8" unit_magnitude="L^4" units="m^4" />
+    <value n="localI2_2" pn="Shear I2" v="1.0" help="Local coordinate of the shear center I2" />
+    <value n="localI3_2" pn="Shear I3" v="1.0" help="Local coordinate of the shear center I3" />
+    <value n="heightI2_2" pn="Cross section height I2" v="200.0" unit_magnitude="L" units="m" />
+    <value n="heightI3_2" pn="Cross section height I3" v="200.0" unit_magnitude="L" units="m" />   
+    <value n="angle_2" pn="Angle" v="0.7" unit_magnitude="Angle" units="rad" />
+</blockdata>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<blockdata n='geometry' name='Area' sequence='1' editable_name='unique' icon="sections" help='Truss or cable section.'>     
+    <value n="type" pn="Type" v="_CS_AREA" state="hidden" />
+    <value n="area" pn="Area" v="100.0" unit_magnitude="L^2" units="mm^2"/>
+</blockdata>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<condition n="bc_disp" pn="Displacement" ov="point,line,surface" icon="supports">
+    <value n="x-disp" pn="X-Displacement" values="Yes,No" v="No" />
+    <value n="y-disp" pn="Y-Displacement" values="Yes,No" v="No" />
+    <value n="z-disp" pn="Z-Displacement" values="Yes,No" v="No" />
+    <value n="x-rot" pn="X-Rotation" values="Yes,No" v="No" />
+    <value n="y-rot" pn="Y-Rotation" values="Yes,No" v="No" />
+    <value n="z-rot" pn="Z-Rotation" values="Yes,No" v="No" />
+</condition>

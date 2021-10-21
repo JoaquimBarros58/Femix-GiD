@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<blockdata n='material' name='NLMM101' sequence='1' editable_name='unique' icon="concrete" help='Nonlinear concrete material' morebutton="0">     
+  <value n="type" pn="Type" v="_NLMM101" state="hidden" />
+
+  <!-- Columns C-G  -->
+  <blockdata n="general" name="General">
+    <value n="rho" pn="ρ" v="2500.0" unit_magnitude="M/L^3" units="kg/m^3" help="Density." />
+    <value n="alpha" pn="α" v="1.000e-05" unit_magnitude="Temp^-1" units="°C^-1" help="Temperature coefficient." />
+    <value n="e" pn="E" v="30.0e9" unit_magnitude="P" units="Pa" help="Modulus of elasticity." />
+    <value n="nu" pn="ν" v="0.15" unit_magnitude="" units="" help="Poisson's coefficient." />  
+    <value n="fc" pn="fc" v="30.0e6" unit_magnitude="P" units="Pa" help="Compressive strength." />   
+  </blockdata>
+
+  <!-- Columns H-P -->
+  <blockdata n="mode_i" pn="Fracture Mode I" help="Fracture Mode I Properties">
+    <value n="fct" pn="fct" v="2.5e6" unit_magnitude="P" units="Pa" help="Tensile strength." />
+    <value n="ten_diag" pn="Tensile softening diagram" values="TRILINEAR,CORNELISSEN" v="TRILINEAR" help="Type of tensile-softening diagram." />
+    <value n="x1" pn="ξ1" v="0.01" help="Ratio between the strain at the first post-peak point and the ultimate strain of the trilinear tensile-softening diagram (fracture mode I)" />
+    <value n="a1" pn="α1" v="0.8" help="Ratio between the stress at the first post-peak point and the tensile strength of the trilinear tensile-softening diagram (fracture mode I)" />
+    <value n="x2" pn="ξ2" v="0.2" help="Ratio between the strain at the second post-peak point and the ultimate strain of the trilinear tensile-softening diagram (fracture mode I)" />
+    <value n="a2" pn="α2" v="1.5" help="Ratio between the stress at the second post-peak point and the tensile strength of the trilinear tensile-softening diagram (fracture mode I)" />
+    <value n="gf" pn="Gf" v="100.0" unit_magnitude="F/L" units="N/m" help="Mode I fracture energy." />
+    <value n="p1" pn="Shear retention factor" values="_LINEAR,_QUADRATIC,_CUBIC" v="QUADRATIC" editable="1" help="Type of shear retention factor." />
+    <value n="p2" pn="Available fracture energy" v="2.0" help="Parameter to define the mode I fracture energy available to the new crack." />
+  </blockdata>
+
+  <!-- Columns Q-T -->  
+  <blockdata n="misc" pn="Miscellaneous">
+    <value n="load_diag" pn="Unloading/Reloading diagram" values="SECANT,ELASTIC" v="SECANT" help="Unloading/Reloading Diagram." />
+    <value n="crack_band" pn="Crack band width" values="SQRT_ELEMENT,SQRT_IP" v="SQRT_IP" editable="1" help="Crack band width for the fracture mode I. It can be _SQRT_ELEMENT, _SQRT_IP or enter a new value." />
+    <value n="crack_num" pn="Num. of cracks" v="2" help="Maximum n. of cracks." />
+    <value n="crack_angle" pn="Threshold angle" v="30" unit_magnitude="Angle" units="deg" help="Threshold angle." />
+  </blockdata>
+</blockdata>

@@ -1,0 +1,25 @@
+<group name="femix_preferences" label="Femix">
+    <labelframe name="GenOpt" label="General options">
+        <combobox name="DevMode" variable="DevMode" variablemanager="Event::ManagePreferences" label="Mode" 
+            help="Show/Hide some experimental features">
+            <option value="dev" label="Developer"/>
+            <option value="release" label="Release"/>
+        </combobox>
+
+        <combobox name="RenumberMethod" variable="RenumberMethod" variablemanager="Event::ManagePreferences" label="Mesh options" 
+            help="
+            Options:\n\n
+            1) Avoid nodes and elements renumeration, entities numbers are set increasingly when they are generated.\n
+            2) Avoid nodes renumeration, nodes numbers are set increasingly when they are generated.\n
+            3) Geometrical algorithm, ordered by the distance to some coordinate. It is the default value.\n
+            4) Reverse Cuthill-McKee algorithm, similar to the previous one, but following element's connectivities.\n
+            5) Ordered following the XYZ axes, interesting for special cases with geometry aligned to the axes.\n
+            ">
+            <option value="-2" label="Avoid nodes and elements renumeration" />
+            <option value="-1" label="Avoid nodes renumeration" />
+            <option value="0" label="Geometrical algorithm" />
+            <option value="1" label="Reverse Cuthill-McKee algorithm" />
+            <option value="2" label="Ordered following the XYZ axes" />
+        </combobox>
+    </labelframe>
+</group>

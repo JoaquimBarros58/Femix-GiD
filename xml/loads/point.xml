@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<condition n="point" pn="Point Loads" ov="point" icon="loads">
+
+    <value n="case" pn="Load Case" editable='0' values_tree="[GetLoadCases]" />
+
+    <value n="presc" pn="Prescribed displacement" values="Yes,No" actualize_tree="1" v="No">
+        <dependencies value="Yes" node="../value[@n='x-force']" att1="state" v1="hidden" />
+        <dependencies value="Yes" node="../value[@n='y-force']" att1="state" v1="hidden" />
+        <dependencies value="Yes" node="../value[@n='z-force']" att1="state" v1="hidden" />
+        <dependencies value="Yes" node="../value[@n='x-mom']"   att1="state" v1="hidden" />
+        <dependencies value="Yes" node="../value[@n='y-mom']"   att1="state" v1="hidden" />
+        <dependencies value="Yes" node="../value[@n='z-mom']"   att1="state" v1="hidden" />
+
+        <dependencies value="Yes" node="../value[@n='x-disp']" att1="state" v1="normal" />
+        <dependencies value="Yes" node="../value[@n='y-disp']" att1="state" v1="normal" />
+        <dependencies value="Yes" node="../value[@n='z-disp']" att1="state" v1="normal" />
+        <dependencies value="Yes" node="../value[@n='x-rot']"  att1="state" v1="normal" />
+        <dependencies value="Yes" node="../value[@n='y-rot']"  att1="state" v1="normal" />
+        <dependencies value="Yes" node="../value[@n='z-rot']"  att1="state" v1="normal" />
+
+        <dependencies value="No" node="../value[@n='x-force']" att1="state" v1="normal" />
+        <dependencies value="No" node="../value[@n='y-force']" att1="state" v1="normal" />
+        <dependencies value="No" node="../value[@n='z-force']" att1="state" v1="normal" />
+        <dependencies value="No" node="../value[@n='x-mom']"   att1="state" v1="normal" />
+        <dependencies value="No" node="../value[@n='y-mom']"   att1="state" v1="normal" />
+        <dependencies value="No" node="../value[@n='z-mom']"   att1="state" v1="normal" />
+
+        <dependencies value="No" node="../value[@n='x-disp']" att1="state" v1="hidden" />
+        <dependencies value="No" node="../value[@n='y-disp']" att1="state" v1="hidden" />
+        <dependencies value="No" node="../value[@n='z-disp']" att1="state" v1="hidden" />
+        <dependencies value="No" node="../value[@n='x-rot']"  att1="state" v1="hidden" />
+        <dependencies value="No" node="../value[@n='y-rot']"  att1="state" v1="hidden" />
+        <dependencies value="No" node="../value[@n='z-rot']"  att1="state" v1="hidden" />
+    </value>
+
+    <value n="x-force" pn="X-Force" v="0.0" state="normal" unit_magnitude="F" units="N" />
+    <value n="y-force" pn="Y-Force" v="0.0" state="normal" unit_magnitude="F" units="N" />
+    <value n="z-force" pn="Z-Force" v="0.0" state="normal" unit_magnitude="F" units="N" />
+    <value n="x-mom" pn="X-Moment" v="0.0" state="normal" unit_magnitude="F*L" units="N*m" />
+    <value n="y-mom" pn="Y-Moment" v="0.0" state="normal" unit_magnitude="F*L" units="N*m" />
+    <value n="z-mom" pn="Z-Moment" v="0.0" state="normal" unit_magnitude="F*L" units="N*m" /> 
+
+    <value n="x-disp" pn="X-Displacement" v="0.0" state="hidden" unit_magnitude="L" units="m" />
+    <value n="y-disp" pn="Y-Displacement" v="0.0" state="hidden" unit_magnitude="L" units="m" />
+    <value n="z-disp" pn="Z-Displacement" v="0.0" state="hidden" unit_magnitude="L" units="m" />
+    <value n="x-rot" pn="X-Rotation" v="0.0" state="hidden" unit_magnitude="Angle" units="rad" />
+    <value n="y-rot" pn="Y-Rotation" v="0.0" state="hidden" unit_magnitude="Angle" units="rad" />
+    <value n="z-rot" pn="Z-Rotation" v="0.0" state="hidden" unit_magnitude="Angle" units="rad" />
+</condition>

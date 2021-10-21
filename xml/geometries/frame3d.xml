@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<blockdata n='geometry' name='Frame 3D' sequence='1' editable_name='unique' icon="sections" help="Three dimensional beam cross-section">
+    <value n="type" pn="Type" v="_CS_3D" state="hidden" />
+    <value n="area" pn="Area" v="0.06" unit_magnitude="L^2" units="m^2" />
+    <value n="shapeI2" pn="Shape factor I2" v="1.0" />
+    <value n="shapeI3" pn="Shape factor I3" v="1.0" />
+    <value n="torsion" pn="Torsional constant" v="1.0" />
+    <value n="momentI2" pn="Moment of inertia I2" v="1.0e-8" unit_magnitude="L^4" units="m^4" />
+    <value n="momentI3" pn="Moment of inertia I3" v="1.0e-8" unit_magnitude="L^4" units="m^4" />
+    <value n="localI2" pn="Shear I2" v="1.0" help="Local coordinate of the shear center I2" />
+    <value n="localI3" pn="Shear I3" v="1.0" help="Local coordinate of the shear center I3" />
+    <value n="heightI2" pn="Cross section height I2" v="200.0" unit_magnitude="L" units="m" />
+    <value n="heightI3" pn="Cross section height I3" v="200.0" unit_magnitude="L" units="m" />   
+    <value n="angle" pn="Angle" v="0.7" unit_magnitude="Angle" units="rad" />
+</blockdata>  

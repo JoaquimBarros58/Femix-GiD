@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<condition n="edge" pn="Edge Loads" ov="line" icon="loads">
+    <value n="case" pn="Load Case" editable='0' values_tree="[GetLoadCases]" />
+
+    <value n="vector" pn="Vector type" values="Global,Frame,Solid/Shell,Plane stress/Plane strain/Axisymmetry,Specified" v="Global">
+        <dependencies value="Global" node="../value[@n='dir_global']" att1="state" v1="normal" />
+        <dependencies value="Global" node="../value[@n='dir_frame']" att1="state" v1="hidden" />
+        <dependencies value="Global" node="../value[@n='dir_solid']" att1="state" v1="hidden" />
+        <dependencies value="Global" node="../value[@n='dir_plane']" att1="state" v1="hidden" />
+        <dependencies value="Global" node="../value[@n='x_dir']" att1="state" v1="hidden"/>
+        <dependencies value="Global" node="../value[@n='y_dir']" att1="state" v1="hidden"/>
+        <dependencies value="Global" node="../value[@n='z_dir']" att1="state" v1="hidden"/>
+
+        <dependencies value="Frame" node="../value[@n='dir_global']" att1="state" v1="hidden" />
+        <dependencies value="Frame" node="../value[@n='dir_frame']" att1="state" v1="normal" />
+        <dependencies value="Frame" node="../value[@n='dir_solid']" att1="state" v1="hidden" />
+        <dependencies value="Frame" node="../value[@n='dir_plane']" att1="state" v1="hidden" />
+        <dependencies value="Frame" node="../value[@n='x_dir']" att1="state" v1="hidden"/>
+        <dependencies value="Frame" node="../value[@n='y_dir']" att1="state" v1="hidden"/>
+        <dependencies value="Frame" node="../value[@n='z_dir']" att1="state" v1="hidden"/>
+
+        <dependencies value="Solid/Shell" node="../value[@n='dir_global']" att1="state" v1="hidden" />
+        <dependencies value="Solid/Shell" node="../value[@n='dir_frame']" att1="state" v1="hidden" />
+        <dependencies value="Solid/Shell" node="../value[@n='dir_solid']" att1="state" v1="normal" />
+        <dependencies value="Solid/Shell" node="../value[@n='dir_plane']" att1="state" v1="hidden" />
+        <dependencies value="Solid/Shell" node="../value[@n='x_dir']" att1="state" v1="hidden"/>
+        <dependencies value="Solid/Shell" node="../value[@n='y_dir']" att1="state" v1="hidden"/>
+        <dependencies value="Solid/Shell" node="../value[@n='z_dir']" att1="state" v1="hidden"/>
+
+        <dependencies value="Plane stress/Plane strain/Axisymmetry" node="../value[@n='dir_global']" att1="state" v1="hidden" />
+        <dependencies value="Plane stress/Plane strain/Axisymmetry" node="../value[@n='dir_frame']" att1="state" v1="hidden" />
+        <dependencies value="Plane stress/Plane strain/Axisymmetry" node="../value[@n='dir_solid']" att1="state" v1="hidden" />
+        <dependencies value="Plane stress/Plane strain/Axisymmetry" node="../value[@n='dir_plane']" att1="state" v1="normal" />
+        <dependencies value="Plane stress/Plane strain/Axisymmetry" node="../value[@n='x_dir']" att1="state" v1="hidden"/>
+        <dependencies value="Plane stress/Plane strain/Axisymmetry" node="../value[@n='y_dir']" att1="state" v1="hidden"/>
+        <dependencies value="Plane stress/Plane strain/Axisymmetry" node="../value[@n='z_dir']" att1="state" v1="hidden"/>
+ 
+        <dependencies value="Specified" node="../value[@n='dir_global']" att1="state" v1="hidden" />
+        <dependencies value="Specified" node="../value[@n='dir_frame']" att1="state" v1="hidden" />
+        <dependencies value="Specified" node="../value[@n='dir_solid']" att1="state" v1="hidden" />
+        <dependencies value="Specified" node="../value[@n='dir_plane']" att1="state" v1="hidden" />
+        <dependencies value="Specified" node="../value[@n='x_dir']" att1="state" v1="normal"/>
+        <dependencies value="Specified" node="../value[@n='y_dir']" att1="state" v1="normal"/>
+        <dependencies value="Specified" node="../value[@n='z_dir']" att1="state" v1="normal"/>
+    </value>
+
+    <value n="dir_global" pn="Direction" values="XG1,XG2,XG3" v="XG1" />
+    <value n="dir_frame" pn="Direction" values="L1,L2,L3" v="L1" />
+    <value n="dir_solid" pn="Direction" values="T,NN,NT" v="T" />
+    <value n="dir_plane" pn="Direction" values="T,NT" v="T" />
+    <value n="x_dir" pn="X-direction" v="" />
+    <value n="y_dir" pn="Y-direction" v="" />
+    <value n="z_dir" pn="Z-direction" v="" />
+
+    <value n="type" pn="Type of load" values="Force,Moment" v="Force" />
+    <!-- <value n="nodes" pn="Number of nodes" values="All,4,8" v="All" editable="0" /> -->
+    <value n="value" pn="Load value" v="0.0" unit_magnitude="F" units="N" />
+</condition>

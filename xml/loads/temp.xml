@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<condition n="temp_var" pn="Temperature Variation" ov="line,surface,volume" icon="loads">
+    <value n="case" pn="Load Case" editable='0' values_tree="[GetLoadCases]" />
+    <value n="temp" pn="Temperature" v="0.0" unit_magnitude="Temp" units="°C" />
+</condition>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<container n="parts" pn="Parts" icon="parts">
+    <condition  n="parts_1d" pn="1D" icon="parts" ov="line">
+        <value n="element" pn="Element" 
+            values="CABLE_2D,CABLE_3D,EMB_CABLE_2D,EMB_CABLE_3D,FRAME_2D,FRAME_3D,TRUSS_2D,TRUSS_3D,TIMOSHENKO_BEAM_2D,TIMOSHENKO_BEAM_3D"
+            v="TRUSS_2D">
+
+            <dependencies value='CABLE_2D' node="../value[@n='integration']" att1="state" v1='normal'/> 
+            <dependencies value='CABLE_3D' node="../value[@n='integration']" att1="state" v1='normal'/> 
+            <dependencies value='EMB_CABLE_2D' node="../value[@n='integration']" att1="state" v1='normal'/> 
+            <dependencies value='EMB_CABLE_3D' node="../value[@n='integration']" att1="state" v1='normal'/> 
+            <dependencies value='TIMOSHENKO_BEAM_2D' node="../value[@n='integration']" att1="state" v1='normal'/> 
+            <dependencies value='TIMOSHENKO_BEAM_3D' node="../value[@n='integration']" att1="state" v1='normal'/> 
+            <dependencies value='FRAME_2D' node="../value[@n='integration']" att1="state" v1='hidden'/> 
+            <dependencies value='FRAME_3D' node="../value[@n='integration']" att1="state" v1='hidden'/> 
+            <dependencies value='TRUSS_2D' node="../value[@n='integration']" att1="state" v1='hidden'/> 
+            <dependencies value='TRUSS_3D' node="../value[@n='integration']" att1="state" v1='hidden'/> 
+        </value>
+
+        <value n="material" pn="Material" help="Choose a material from the database" values_tree='[GetMaterials]' />
+        <value n="geometry" pn="Geometry" help="" values_tree='[GetGeom1D]' />
+        <value n="integration" pn="Integration" help="" values_tree='[GetIntegrations]' />
+    </condition> 
+
+    <condition  n="parts_2d" pn="2D" icon="parts" ov="surface">
+        <value n="element" pn="Element" 
+            values="INTERFACE_LINE_2D,PLANE_STRESS_QUAD,PLANE_STRAIN_QUAD"
+            v="PLANE_STRESS_QUAD">
+
+            <dependencies value='PLANE_STRAIN_QUAD' node="../value[@n='geometry']" att1="state" v1='hidden' /> 
+            <dependencies value='PLANE_STRESS_QUAD' node="../value[@n='geometry']" att1="state" v1='normal' />
+            <dependencies value='INTERFACE_LINE_2D' node="../value[@n='geometry']" att1="state" v1='normal' />
+        </value>
+
+        <value n="geometry" pn="Geometry" help="" values_tree='[GetGeom2D]' />
+        <value n="integration" pn="Integration" help="" values_tree='[GetIntegrations]' />
+        <value n="material" pn="Material" help="Choose a material from the database" values_tree='[GetMaterials]' />
+    </condition> 
+
+    <condition  n="parts_3d" pn="3D" icon="parts" ov="volume">
+        <value n="element" pn="Element" 
+            values="SOLID_HEXA,SOLID_TETRA" 
+            v="SOLID_HEXA"> 
+        </value>
+        <value n="geometry" pn="Geometry" state="hidden" help="" />
+        <value n="integration" pn="Integration" help="" values_tree='[GetIntegrations]' />
+        <value n="material" pn="Material" help="Choose a material from the database" values_tree='[GetMaterials]' />
+    </condition> 
+</container>

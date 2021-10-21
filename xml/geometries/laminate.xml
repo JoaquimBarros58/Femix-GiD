@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<blockdata n='geometry' name='Laminate' sequence='1' editable_name='unique' icon="sections" help='laminate'>     
+    <value n="type" pn="Type" v="_LAM_THICK" state="hidden" />
+    <value n="thick" pn="Thickness" v="150.0" unit_magnitude="L" units="mm"/>
+</blockdata>

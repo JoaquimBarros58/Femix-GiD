@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<blockdata n='rule' name='Rule 2D' sequence='1' editable_name='unique' icon="rules">
+    <value n="dime" v="2" state="hidden" />
+
+    <value n="type" pn="Type" values="GLEG,GLOB,NCOTES" 
+    v="GLEG" help="Integration rule method. GLEG: Gauss-Legendre, GLOB: Gauss-Lobatto and NCOTES: Newton-Cotes" />
+
+    <value n="term" pn="Term 1" values="G,M,S,T,B" v="G" help="Type of term 1." />
+    <value n="points" pn="No. Points 1" values="1,2,3,4,5,6,7,8,9,10" v="2" help="Num. of points in the specified direction 1." />
+
+    <value n="term2" pn="Term 2" values="G,M,S,T,B" v="G" help="Type of term 2." />
+    <value n="points2" pn="No. Points 2" values="1,2,3,4,5,6,7,8,9,10" v="2" help="Num. of points in the specified direction 2." />
+</blockdata>
