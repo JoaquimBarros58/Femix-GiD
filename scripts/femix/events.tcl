@@ -96,9 +96,13 @@ proc Event::WriteInputFile {{filename ""}} {
 # @param app name of the executable, it can be prefemix, femix or posfemix.
 proc Event::RunExec {app} {
     if {[Femix::IsModelSaved] == 1} {
-        # Command to run.
         set bin [file join $::Femix::femixVars(Path) bin $app.exe]
-        exec cmd /c start cmd /k $bin [Femix::GetJob]
+        set OS [lindex $::tcl_platform(platform) 0]
+        if { $OS == "Windows" } {        
+            exec cmd /c start cmd /k $bin [Femix::GetJob]
+        } else {
+            exec wine $bin [Femix::GetJob]
+        }
     }
 }
 
@@ -213,6 +217,7 @@ proc Event::ImportPva {} {
 # This event is dispatched when the user clicks on the menu Femix->Test.
 # This menu is only available in dev mode.
 proc Event::Debug {} {
+
 }
 
 proc Event::ModifyPreferencesWindow { root } {
