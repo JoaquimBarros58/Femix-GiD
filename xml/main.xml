@@ -11,6 +11,7 @@
         </value>
         <value n="num_phases" pn="Number of Phases" v="1" state="normal" />
     </container>
+    
 
     <!-- Matrix storage and solver  -->
     <container n="storage" pn="Matrix Storage and Solver" actualize="1" icon="main">
@@ -97,4 +98,24 @@
             state="hidden"
         />
     </container>
+
+    <!-- Arc Length -->
+    <container n="arcl" pn="Arc Length" icon="main">
+        <value n="activate" pn="Activate" values="Yes,No" v="No" actualize_tree="1">
+            <dependencies value='Yes' node="../value[@n='max']" att1="state" v1="normal"/>
+            <dependencies value='No' node="../value[@n='max']" att1="state" v1="hidden"/>
+            <dependencies value='Yes' node="../value[@n='node']" att1="state" v1="normal"/>
+            <dependencies value='No' node="../value[@n='node']" att1="state" v1="hidden"/>
+            <dependencies value='Yes' node="../value[@n='incr']" att1="state" v1="normal"/>
+            <dependencies value='No' node="../value[@n='incr']" att1="state" v1="hidden"/>
+            <dependencies value='Yes' node="../value[@n='dof']" att1="state" v1="normal"/>
+            <dependencies value='No' node="../value[@n='dof']" att1="state" v1="hidden"/>
+        </value>
+
+        <value n="max" pn="Max. number"  v="" state="hidden" help="Maximum number of arc length combinations" />
+        <value n="node" pn="Node number" v="" state="hidden" help="Node number" />
+        <value n="incr" pn="Displacement increment" v="" state="hidden" help="Displacement increment" />
+        <value n="dof" pn="Degree of freedom" values="X,Y,Z" state="hidden" help="Degree of freedom" />
+    </container>
+
 </container>

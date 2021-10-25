@@ -33,10 +33,7 @@ if {[GidUtils::VersionCmp "14.0.1"] >= 0 } {
 
 # Called when the problem type is loaded.
 #
-# Arguments:
-# ----------
-# dir: femix.gid directory.
-#
+# @param dir femix.gid directory.
 proc Femix::Event_InitProblemtype {dir} {
     variable femixVars
 
@@ -60,7 +57,6 @@ proc Femix::Event_InitProblemtype {dir} {
 }
 
 # Init GiD events.
-# 
 proc Femix::Events {} {
     variable femixVars
 
@@ -76,10 +72,7 @@ proc Femix::Events {} {
 
 # Init femix private variables.
 #
-# Arguments:
-# ----------
-# dir: femix.gid directory.
-# 
+# @param: femix.gid directory.
 proc Femix::InitGlobalVariables {dir} {
     variable femixVars
 
@@ -94,10 +87,12 @@ proc Femix::InitGlobalVariables {dir} {
     set femixVars(Group) Default ; 
     # Variables from the problemtype definition (femix.xml)
     array set femixVars [ReadProblemtypeXml [file join $femixVars(Path) femix.xml] Infoproblemtype {Name Version CheckMinimumGiDVersion}]
+    
+    # Load the Femix problemtype global and user preferences
+    Femix::LoadPreferences
 }
 
 # Load all tcl scripts.
-# 
 proc Femix::LoadCommonScripts {} {
     variable femixVars
     set root $femixVars(Path)
@@ -138,7 +133,6 @@ proc Femix::LoadCommonScripts {} {
 
 # Register GiD events. A 'Event procedure' is a Tcl procedure that is invoked
 # from GiD when doing some actions.
-# 
 proc Femix::RegisterGiDEvents {} {
     # Unregister previous events
     GiD_UnRegisterEvents PROBLEMTYPE Femix
@@ -153,4 +147,107 @@ proc Femix::RegisterGiDEvents {} {
     # Preferences window
     GiD_RegisterPluginPreferencesProc Event::ModifyPreferencesWindow
     CreateWidgetsFromXml::ClearCachePreferences
+}
+
+# Saves users preferences to file. 
+proc Femix::SavePreferences { } {
+    #do not save preferences starting with flag gid.exe -c (that specify read only an alternative file)
+    if { [GiD_Set SaveGidDefaults] } {
+        variable femixVars
+        set varsToSave [list DevMode RenumberMethod]
+        set preferences [dict create]
+        foreach v $varsToSave {
+            if {[info exists femixVars($v)]} {
+                dict set preferences $v $femixVars($v)
+            }
+        }
+        
+        if {[llength [dict keys $preferences]] > 0} {
+            set fp [open [Femix::GetPrefsFilePath] w]
+            if {[catch {set data [puts $fp [Femix::tcl2json $preferences]]} ]} {W "Problems saving user prefecences"; W $data}
+            close $fp
+        }
+    }
+}
+
+# Loads users preferences from file.
+proc Femix::LoadPreferences { } {
+    variable femixVars
+
+    # Init variables
+    set data ""
+    
+    catch {
+        # Try to open the preferences file
+        set fp [open [Femix::GetPrefsFilePath] r]
+        # Read the preferences
+        set data [read $fp]
+        # Close the file
+        close $fp
+    }
+    # Preferences are written in json format
+    foreach {k v} [Femix::json2dict $data] {
+        # Foreach pair key value, restore it
+        set femixVars($k) $v
+    }
+}
+
+
+package require json::write
+
+proc Femix::json2dict {JSONtext} {
+    string range [
+        string trim [
+            string trimleft [
+                string map {\t {} \n {} \r {} , { } : { } \[ \{ \] \}} $JSONtext
+                ] {\uFEFF}
+            ]
+        ] 1 end-1
+}
+
+proc Femix::tcl2json { value } {
+    # Guess the type of the value; deep *UNSUPPORTED* magic!
+    # display the representation of a Tcl_Obj for debugging purposes. Do not base the behavior of any command on the results of this one; it does not conform to Tcl's value semantics!
+    regexp {^value is a (.*?) with a refcount} [::tcl::unsupported::representation $value] -> type
+    if {$value eq ""} {return [json::write array {*}[lmap v $value {tcl2json $v}]]}
+    switch $type {
+        string {
+            if {$value eq "false"} {return [expr "false"]}
+            if {$value eq "true"} {return [expr "true"]}
+            if {$value eq "null"} {return null}
+            if {$value eq "dictnull"} {return {{}}}
+            return [json::write string $value]
+        }
+        dict {
+            return [json::write object {*}[
+                    dict map {k v} $value {tcl2json $v}]]
+        }
+        list {
+            return [json::write array {*}[lmap v $value {tcl2json $v}]]
+        }
+        int - double {
+            return [expr {$value}]
+        }
+        booleanString {
+            if {[isBooleanFalse $value]} {return [expr "false"]}
+            if {[isBooleanTrue $value]} {return [expr "true"]}
+            return [json::write string $value]
+            #return [expr {$value ? "true" : "false"}]
+        }
+        default {
+            # Some other type; do some guessing...
+            if {$value eq "null"} {
+                # Tcl has *no* null value at all; empty strings are semantically
+                # different and absent variables aren't values. So cheat!
+                return $value
+            } elseif {[string is integer -strict $value]} {
+                return [expr {$value}]
+            } elseif {[string is double -strict $value]} {
+                return [expr {$value}]
+            } elseif {[string is boolean -strict $value]} {
+                return [expr {$value ? "true" : "false"}]
+            }
+            return [json::write string $value]
+        }
+    }
 }

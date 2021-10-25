@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<blockdata n="material" name="NLMM201" sequence="1" editable_name="unique" icon="steel" help="Nonlinear concrete material" morebutton="0">     
+<blockdata n="material" name="NLMM201" sequence="1" editable_name="unique" icon="steel" 
+    help="Nonlinear concrete material" morebutton="0">
     <value n="type" pn="Type" v="_NLMM201" state="hidden" />
 
     <!-- Columns C-K -->
-    <value n="rho" pn="ρ" v="7850.0" unit_magnitude="M/L^3" units="kg/m^3" help="Density." />
+    <value n="rho" pn="ρ" v="7850.0" unit_magnitude="M/L^3" units="kg/m^3" help="Density." help_image="NLMM201.png" />
     <value n="alpha" pn="α" v="1.000e-05" unit_magnitude="Temp^-1" units="°C^-1" help="Temperature coefficient." />
     <value n="esy" pn="εsy" v="0.002" help="Strain at the end of the first branch." />
     <value n="fsy" pn="fsy" v="400.0e6" unit_magnitude="P" units="Pa" help="Stress at the end of the first branch." />

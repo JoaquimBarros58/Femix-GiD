@@ -5,32 +5,30 @@ proc Writer::MainParameters {} {
     Writer::WriteLine "MAIN_TITLE = My model ;" 2
     Writer::WriteLine
 
-    # ---------------------------------------
     # Analyse type parameters
-    # ---------------------------------------
-    # Path to node of the tree.
     set path {/*/container[@n="main_parameters"]//value[@n="analysis_type"]}
     Writer::WriteLine "ANALYSIS_TYPE = [SpdAux::GetTag $path] ;" 2
+    # Material nonlinearities parameters
+    set path "container\[@n = 'main_parameters' \]/container\[@n = 'nlprob' \]/value\[@n = 'mat_nonlinear_prob' \]"
+    set mat [SpdAux::GetValue $path]
+    Writer::WriteLine "MATERIALLY_NONLINEAR_PROBLEM = [SpdAux::GetTagYesNo $path] ;" 2
+    # Geomtric nonlinearities parameters
+    set path "container\[@n = 'main_parameters' \]/container\[@n = 'nlprob' \]/value\[@n = 'geo_nonlinear_prob' \]"
+    set geo [SpdAux::GetValue $path]
+    Writer::WriteLine "GEOMETRICALLY_NONLINEAR_PROBLEM = [SpdAux::GetTagYesNo $path] ;" 2
     Writer::WriteLine
+
     set path "container\[@n = 'main_parameters' \]/container\[@n = 'phases' \]/value\[@n = 'num_phases' \]"
     Writer::WriteLine "NUMBER_OF_PHASES = [SpdAux::GetValue $path] ;" 2
     Writer::WriteLine "NUMBER_OF_LOAD_CASES = [SpdAux::GetNumLoadCases] ;" 2
     Writer::WriteLine "NUMBER_OF_COMBINATIONS = 0 ;" 2
-    Writer::WriteLine
-
-    # ---------------------------------------
-    # Material nonlinearities parameters
-    # ---------------------------------------
-    set path "container\[@n = 'main_parameters' \]/container\[@n = 'nlprob' \]/value\[@n = 'mat_nonlinear_prob' \]"
-    set mat [SpdAux::GetValue $path]
-    Writer::WriteLine "MATERIALLY_NONLINEAR_PROBLEM = [SpdAux::GetTagYesNo $path] ;" 2
-
-    # ---------------------------------------
-    # Geomtric nonlinearities parameters
-    # ---------------------------------------
-    set path "container\[@n = 'main_parameters' \]/container\[@n = 'nlprob' \]/value\[@n = 'geo_nonlinear_prob' \]"
-    set geo [SpdAux::GetValue $path]
-    Writer::WriteLine "GEOMETRICALLY_NONLINEAR_PROBLEM = [SpdAux::GetTagYesNo $path] ;" 2
+    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'activate' \]"
+    set arc [SpdAux::GetValue $path]
+    # Only prints arc lenght if the nonlinear analysis is enabled.
+    if {$mat == "Yes" && $arc == "Yes"} { 
+        set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'max' \]"
+        Writer::WriteLine "MAXIMUM_NUMBER_OF_ARC_LENGTH_COMBINATIONS = [SpdAux::GetValue $path] ;" 2
+    }
     Writer::WriteLine
 
     # ---------------------------------------
@@ -62,5 +60,25 @@ proc Writer::MainParameters {} {
     }
 
     Writer::WriteLine </MAIN_PARAMETERS> 1
+    Writer::WriteLine
+
+    if {$mat == "Yes" && $arc == "Yes"} { 
+        Writer::ArcLength
+    }
+}
+
+proc Writer::ArcLength {} {
+    Writer::WriteLine <ARC_LENGTH_PARAMETERS> 1
+
+    Writer::WriteLine "DISPLACEMENT_CONTROL = _Y ;" 2
+    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'node' \]"
+    Writer::WriteLine "POINT_NUMBER = [SpdAux::GetValue $path] ;" 2
+    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'dof' \]"
+    set dof _[Femix::GetDirectionLabel [SpdAux::GetValue $path]]
+    Writer::WriteLine "DEGREE_OF_FREEDOM = $dof ;" 2
+    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'incr' \]"
+    Writer::WriteLine "DISPLACEMENT_INCREMENT = [SpdAux::GetValue $path] ;" 2
+    
+    Writer::WriteLine </ARC_LENGTH_PARAMETERS> 1
     Writer::WriteLine
 }
