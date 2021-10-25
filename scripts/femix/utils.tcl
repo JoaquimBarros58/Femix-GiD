@@ -7,7 +7,6 @@
 # #############################################################################
 
 # Warning about minimum recommended GiD version.
-# 
 proc Femix::WarnAboutVersion {} {
     variable femixVars
 
@@ -24,15 +23,9 @@ proc Femix::WarnAboutVersion {} {
 
 # Gets the model name.
 # 
-# Arguments:
-# ----------
-# file: Absolute path of the model filename. If this argument is not provided
-#       then it will return the current project directory path.
-#
-# Return
-# -------
-# The name of the model.
-#
+# @param file Absolute path of the model filename. If this argument is not 
+#        provided then it will return the current project directory path.
+# @return The name of the model.
 proc Femix::GetModelName {{file ""}} {
     if {$file == ""} {
         return [file tail [GiD_Info project ModelName]]
@@ -356,6 +349,62 @@ proc Femix::CreatePosBat {} {
 
     # Closes the bat file.
     close $f
+}
+
+# Converts the cartesian direction labels (x,y,z) to femix direction labels 
+# (D1,D2,D3). For 2D problem, it changes the plane to fit femix requirements, 
+# i.e. the XY plane will be changed to YZ plane.
+#
+# Arguments:
+# ----------
+# dir: The cartesian direction: x, y or z.
+#
+# Return:
+# -------
+# The corresponding direction using femix symbol.
+#
+proc Femix::GetDirectionLabel {dir} {
+    set dim [Femix::GetNumDimension]
+    set dir [string toupper $dir]
+
+    if {$dir == "X"} { 
+        if {$dim == 2} {
+            return "D2"
+        } else {
+            return "D1" 
+        }
+    } elseif {$dir == "Y"} { 
+        if {$dim == 2} {
+            return "D3"
+        } else {
+            return "D2" 
+        }
+    } else {
+        return "D3"
+    }
+}
+
+# Gets the user preference file. This file is stored in the same folder used 
+# by GiD to save log files, ini files, etc. In windwos this files are located
+# at Users->AppData->Roaming->GiD
+#
+# @return The directory path to save
+proc Femix::GetPrefsFilePath { } {
+    variable femixVars
+    # Where we store the user preferences :)
+    
+    # Get the GiD preferences dir
+    set dirname [file dirname [GiveGidDefaultsFile]]
+
+    # Our file is FemixVars.txt
+    set filename $femixVars(Name)Vars.txt
+
+    # Linux one will start with a point...
+    if { $::tcl_platform(platform) == "windows" } {
+        return [file join $dirname $filename]
+    } else {
+        return [file join $dirname .$filename]
+    }
 }
 
 
