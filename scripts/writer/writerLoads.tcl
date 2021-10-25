@@ -3,7 +3,6 @@ proc Writer::Loads {} {
 }
 
 # Prints all load cases defined in the Load Cases node of the tree.
-# 
 proc Writer::LoadCases {} {
     set count 1
 
@@ -21,11 +20,21 @@ proc Writer::LoadCases {} {
 
         # Gets the group name
         set group [SpdAux::GetNodeValue $node "./value\[@n = 'group' \]"]
+        set itype _[SpdAux::GetNodeValue $node "./value\[@n = 'itype' \]"]
+        set iname _[SpdAux::GetNodeValue $node "./value\[@n = 'iname' \]"]
 
         Writer::WriteLine "<LOAD_CASE_PARAMETERS>" 3
         Writer::WriteLine "LOAD_CASE_NUMBER = $count ;" 4
         Writer::WriteLine "LOAD_CASE_TITLE = $load_title ;" 4
         Writer::WriteLine "LOAD_CASE_GROUP = [join $group _] ;" 4
+        Writer::WriteLine
+        if {$::Writer::comment} {
+            Writer::WriteLine "INTEGRATION_TYPE = $itype ; # Keywords: _GLEG, _GLOB, or _NCOTES" 4
+            Writer::WriteLine "INTEGRATION_NAME = $iname ; # Defined in the <NUMERICAL_INTEGRATION> block or _DEFAULT" 4
+        } else {
+            Writer::WriteLine "INTEGRATION_TYPE = $itype ;" 4
+            Writer::WriteLine "INTEGRATION_NAME = $iname ;" 4
+        }
         Writer::WriteLine "</LOAD_CASE_PARAMETERS>\n" 3
 
         # Prints the gravity load block.
