@@ -11,7 +11,6 @@
 namespace eval Event {}
 
 # It is called when the project is about to be closed.
-# 
 proc Event::EndProblemtype {} {
     # New event system need an unregister
     if {[GidUtils::VersionCmp "14.1.4d"] >= 0 } {
@@ -27,69 +26,49 @@ proc Event::EndProblemtype {} {
 
 # It will be called before running the analysis.
 # 
-# Arguments:
-# ----------
-# batfilename: The name of the batch file to be run
-# basename: The short name model;
-# dir: The full path to the model directory;
-# problemtypedir: The full path to the Problem Types directory;
-# gidexe: The full path to gid;
-# args: An optional list with other arguments.
+# @param batfilename The name of the batch file to be run
+# @param basename The short name model;
+# @param dir The full path to the model directory;
+# @param problemtypedir The full path to the Problem Types directory;
+# @param gidexe The full path to gid;
+# @param args An optional list with other arguments.
 # 
-# Return:
-# -------
-# If it returns -cancel- then the calculation is not started.
-# 
+# @return If it returns -cancel- then the calculation is not started.
 proc Event::BeforeRunCalculation {batfilename basename dir problemtypedir gidexe args} {
 }
 
 # It will be called just after the analysis finishes.
 # 
-# Arguments:
-# ----------
-# basename: the short name model;
-# dir: The full path to the model directory;
-# problemtypedir: The full path to the Problem Types directory;
-# where: Must be local or remote (remote if it was run in a server machine,
-#        using ProcServer);
-# error: Returns 1 if an calculation error was detected;
-# errorfilename: An error filename with some error explanation, or nothing 
-#                if everything was ok.
+# @param basename The short name model;
+# @param dir The full path to the model directory;
+# @param problemtypedir The full path to the Problem Types directory;
+# @param where Must be local or remote (remote if it was run in a server 
+#        machine, using ProcServer);
+# @param error Returns 1 if an calculation error was detected;
+# @param errorfilename An error filename with some error explanation, or 
+#        nothing if everything was ok.
 # 
-# Return:
-# -------
-# If it returns -cancel-as a value then the window that inform about the 
+# @return If it returns -cancel-as a value then the window that inform about the 
 # finished process will not be opened.
-# 
 proc Event::AfterRunCalculation {basename dir problemtypedir where error errorfilename} {
 }
 
 # It will be called just before writing the calculation file. It is useful for 
 # validating some parameters.
 # 
-# Arguments:
-# ----------
-# file: The name of the output calculation file.
+# @param file The name of the output calculation file.
 # 
-# Return:
-# -------
-# If it returns -cancel- as a value then nothing will be written.
-# 
+# @return If it returns -cancel- as a value then nothing will be written.
 proc Event::BeforeWriteCalculationFile {file} {
     Femix::CreatePosBat
 }
 
 # It will be called just after the analysis finishes.
 # 
-# Arguments:
-# ----------
-# filename: the name of the output calculation file 
-# error: an error code if there is some problem writing the output calculation file.
+# @param filename the name of the output calculation file 
+# @param error an error code if there is some problem writing the output calculation file.
 # 
-# Return:
-# -------
-# If it returns -cancel- as a value then the calculation is not invoked.
-# 
+# @return If it returns -cancel- as a value then the calculation is not invoked.
 proc Event::AfterWriteCalculationFile {filename error} {
     set err [catch { Writer::WriteInputFile $filename } ret]
     if { $err } {       
@@ -101,10 +80,7 @@ proc Event::AfterWriteCalculationFile {filename error} {
 
 # Saves the model data to file.
 #
-# Arguments:
-# ----------
-# filename: the name of the output calculation file.
-# 
+# @param filename the name of the output calculation file.
 proc Event::WriteInputFile {{filename ""}} {  
     if {$filename eq ""} {
         if {[Femix::IsModelSaved] == 1} {
@@ -117,10 +93,7 @@ proc Event::WriteInputFile {{filename ""}} {
 
 # Run femix executables.
 # 
-# Arguments:
-# ----------
-# app: name of the executable, it can be prefemix, femix or posfemix.
-#
+# @param app name of the executable, it can be prefemix, femix or posfemix.
 proc Event::RunExec {app} {
     if {[Femix::IsModelSaved] == 1} {
         # Command to run.
@@ -130,7 +103,6 @@ proc Event::RunExec {app} {
 }
 
 # About Femix splash dialog.
-# 
 proc Event::About {} {
     set splash [GiD_Set SplashWindow]
     GiD_Set SplashWindow 1 ; # Set temporary to 1 to force show splash without take care of the GiD splash preference
@@ -151,7 +123,6 @@ proc Event::About {} {
 }
 
 # Clear all femix files from the project directory.
-# 
 proc Event::CleanProject {} { 
     set dir [Femix::GetProjecDir]
     # List of extensions that will be deleted.
@@ -186,6 +157,7 @@ proc Event::ExportMesh {{filename ""}} {
     } 
 }
 
+# Opens a femix _gl.dat file.
 proc Event::OpenFemix {} {
     set file [Browser-ramR file read .gid [= "Read FEMIX file"] {} {{{FEMIX} {*_gl.dat }}} {} 0 {}]
     if { $file != "" } {
@@ -194,6 +166,10 @@ proc Event::OpenFemix {} {
     }
 }
 
+# Reads a pva resuolt file from the current project folder. 
+#
+# @param cmd Type of pva file, it uses the command used in posfemix to define.
+#        the type of result. 
 proc Event::ReadResults {cmd} {
     if {$cmd == "dipva"} { set error [Import::PvaResults "di" "me"]}
     if {$cmd == "sepva"} { set error [Import::PvaResults "se" "um"] }
@@ -207,6 +183,7 @@ proc Event::ReadResults {cmd} {
     }    
 }
 
+# Imports a pva result file from a different model in a different folder. 
 proc Event::ImportPva {} {
     set file [Browser-ramR file read .gid [= "Read PVA file"] {} {{{FEMIX} {*.pva }}} {} 0 {}]
     if { $file != "" } {
@@ -235,28 +212,7 @@ proc Event::ImportPva {} {
 # Procedure used for testing during development.
 # This event is dispatched when the user clicks on the menu Femix->Test.
 # This menu is only available in dev mode.
-# 
 proc Event::Debug {} {
-    set elConn [GiD_Mesh get element 1 connectivities]
-    set elName [GiD_Mesh get element 1 connectivities]
-
-    # WarnWin "Fixed: [Femix::GetConn 1]\n\nOriginal: $elConn"
-
-    set f1 [GiD_WriteCalculationFile elements -return -elemtype Hexahedra -elements_faces faces \
-     [dict create  "Face Loads Auto1" "Auto 1 element id:%d face index:%d "]]
-    set f2 [GiD_WriteCalculationFile elements -return -elemtype Hexahedra -elements_faces faces \
-     [dict create  "Face Loads Auto2" "Auto 2 element id:%d face index:%d "]]
-    set f3 [GiD_WriteCalculationFile elements -return -elemtype Hexahedra -elements_faces faces \
-     [dict create  "Face Loads Auto3" "Auto 3 element id:%d face index:%d "]]
-    set f4 [GiD_WriteCalculationFile elements -return -elemtype Hexahedra -elements_faces faces \
-     [dict create  "Face Loads Auto4" "Auto 4 element id:%d face index:%d "]]
-    set f5 [GiD_WriteCalculationFile elements -return -elemtype Hexahedra -elements_faces faces \
-     [dict create  "Face Loads Auto5" "Auto 5 element id:%d face index:%d "]]
-    set f6 [GiD_WriteCalculationFile elements -return -elemtype Hexahedra -elements_faces faces \
-     [dict create  "Face Loads Auto6" "Auto 6 element id:%d face index:%d "]]
-
-
-    WarnWin "$f1\n$f2\n$f3\n$f4\n$f5\n$f6"
 }
 
 proc Event::ModifyPreferencesWindow { root } {
@@ -274,7 +230,6 @@ proc Event::ModifyPreferencesWindow { root } {
 
 # Preference dialog events
 # This function is called when the preference dialog is activated.
-# 
 proc Event::ManagePreferences { cmd name {value ""}} {
     set ret ""
 
@@ -302,6 +257,8 @@ proc Event::ManagePreferences { cmd name {value ""}} {
             }
         }
     }
+
+    Femix::SavePreferences
 
     return $ret
 }
