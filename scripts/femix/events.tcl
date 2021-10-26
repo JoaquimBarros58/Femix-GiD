@@ -101,7 +101,13 @@ proc Event::RunExec {app} {
         if { $OS == "Windows" } {        
             exec cmd /c start cmd /k $bin [Femix::GetJob]
         } else {
-            exec wine $bin [Femix::GetJob]
+            catch {exec wine &} res
+
+            if {![string is integer -strict $res]} {
+                WarnWin "Wine is NOT installed on this computer! You must install it to use FEMIX."
+            } else {
+                exec xterm -hold -e wine $bin [Femix::GetJob]
+            }
         }
     }
 }
