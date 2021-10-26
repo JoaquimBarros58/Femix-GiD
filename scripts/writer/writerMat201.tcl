@@ -1,9 +1,6 @@
 # Writes the material NLMM201 block.
 #
-# Arguments:
-# ----------
-# nlmm201: List of nlmm201 materials.
-# 
+# @param nlmm201 List of nlmm201 materials.
 proc Writer::WriteNLMM201 {nlmm201} {
     variable fg; variable fi; variable fs
 

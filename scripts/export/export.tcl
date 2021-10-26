@@ -11,10 +11,7 @@ namespace eval Export { }
 
 # Export mesh to file.
 #
-# Arguments:
-# ----------
-# filename: It is the name of the file.
-# 
+# @param filename It is the name of the file.
 proc Export::ExportMesh {filename} {
     # Open file for writting
     GiD_WriteCalculationFile init $filename

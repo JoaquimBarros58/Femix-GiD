@@ -1,5 +1,4 @@
 # Writes the integration rule block.
-# 
 proc Writer::Integration {} {
     variable fs ; variable fi ; 
     variable listRule

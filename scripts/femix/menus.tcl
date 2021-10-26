@@ -10,7 +10,6 @@
 ###############################################################################
 
 # Adds the Femix menu option to the main menu.
-#
 proc Femix::ChangeMenus {} {
     variable femixVars
 

@@ -27,10 +27,7 @@ namespace eval Writer {
 
 # Prints data to the .dat calculation file.
 #
-# Arguments:
-# ----------
-# filename: It is the name of the file.
-# 
+# @param filename It is the name of the file.
 proc Writer::WriteInputFile {filename} {
     # Init global variables.
     Writer::Init $filename
@@ -83,7 +80,6 @@ proc Writer::WriteInputFile {filename} {
 }
 
 # Writes the groups block.
-# 
 proc Writer::Groups {} {
     variable fs; variable fi
 
@@ -117,7 +113,6 @@ proc Writer::Groups {} {
 }
 
 # Writes the nodes coordinates block.
-# 
 proc Writer::Nodes {} {
     variable fg ; variable fi ; variable fs
 
@@ -168,7 +163,6 @@ proc Writer::Nodes {} {
 }
 
 # Initialises the namespace variables for future usage.
-# 
 proc Writer::Init {filename} {
     variable file
     variable femixVars
@@ -195,10 +189,7 @@ proc Writer::Init {filename} {
 # associated to it (i.e. material, integration rule, etc) and save these values
 # to a dictionary. Finally, it stores the dictionary to the element list.
 # 
-# Arguments:
-# ----------
-# part: The number of the part 1, 2 or 3.
-# 
+# @param part The number of the part 1, 2 or 3.
 proc Writer::Parts {part} {
     # xpath for parts_1d node.
     if {$part == 1} {
@@ -272,15 +263,12 @@ proc Writer::Parts {part} {
 
 # Writes a string to the input file.
 # 
-# Arguments:
-# ----------
-# str:  String to be written. If no string is provided a blank line will
-#       be printed.
-# ind:  Indentation level, it can be 0, 1, 2, 3 or 4. Default is 0, 
-#       i.e. no indentation.
-# file: If 1 prints to file, if 0 returns a string instead.
-# c:   Caracter used for indentation. Default is a space.
-# 
+# @param str String to be written. If no string is provided a blank line will
+#        be printed.
+# @param ind  Indentation level, it can be 0, 1, 2, 3 or 4. Default is 0, 
+#        i.e. no indentation.
+# @param file If 1 prints to file, if 0 returns a string instead.
+# @param c Caracter used for indentation. Default is a space. 
 proc Writer::WriteLine {{str ""} {ind 0} {file 1} {c " "}} {
     set s ""
 

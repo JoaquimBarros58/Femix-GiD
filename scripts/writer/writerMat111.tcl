@@ -1,9 +1,6 @@
 # Writes the concrete NLMM111 block.
 #
-# Arguments:
-# ----------
-# nlmm111: List of nlmm111 materials.
-# 
+# @param nlmm111 List of nlmm111 materials.
 proc Writer::WriteNLMM111 {nlmm111} {
     variable fg ; variable fi ; variable fs
 

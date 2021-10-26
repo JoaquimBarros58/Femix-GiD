@@ -10,15 +10,10 @@ namespace eval String { }
 
 # Checks if a string is a number.
 # 
-# Arguments:
-# ----------
-# values - A given string.
+# @param values A given string.
 # 
-# Return:
-# -------
-# The number if the string is a number or an empty list if the string
+# @return The number if the string is a number or an empty list if the string
 # is not a number.
-# 
 proc String::IsNumeric {value} {
     set value [string trim $value]
     # Use [string is double] to accept Inf and NaN
@@ -34,22 +29,16 @@ proc String::IsNumeric {value} {
 
 # Counts the number of occurrences  of a character.
 #
-# Arguments:
-# ----------
-# args: first argument is the searched character and second argument is the
-#       string.
+# @param args first argument is the searched character and second argument is the
+#        string.
 #
-# Return:
-# -------
-# It returns the number of characters found in the string. If the option
-# -inline is used it returns a list with the position of the characters in
-# the string
+# @return It returns the number of characters found in the string. If the option
+#         -inline is used it returns a list with the position of the characters in
+#         the string
 #
 # Example:
-# --------
 #    >> string_occurrences "_" "aaa_bbb_ccc"
 #    >> string_occurrences -inline "_" "aaa_bbb_ccc"
-#
 proc String::NumCharsOccur {args} {
     set opt [lindex $args 0]
     set needleString [lindex $args end-1]
@@ -75,38 +64,27 @@ proc String::NumCharsOccur {args} {
 # Splits a string by a delimeter and returns a list containing the splitted 
 # values.
 # 
-# Arguments:
-# ----------
-# str: String to be splitted.
-# delimeter: String used to split the variable.
+# @param str String to be splitted.
+# @param delimeter String used to split the variable.
 # 
-# Return:
-# ----------
-# A list containing the splitted values. Note that all empty list values will 
-# be removed from the returned list.
-# 
+# @return A list containing the splitted values. Note that all empty list values will 
+#         be removed from the returned list.
 proc String::GetList {str {delimeter " "}} {
     return [lsearch -all -inline -not -exact [split $str $delimeter] {}] ; 
 }
 
 # Gets a substring from 0 up to a given position.
 #
-# Arguments:
-# ----------
-# s: String
-# c: Delimeter character.
-# n: Number of occurrences.
+# @param s String
+# @param c Delimeter character.
+# @param n Number of occurrences.
 #
-# Return:
-# -------
-# A substring from 0 up to the nth position. The last occurrence of the 
-# character is not included.
+# @param A substring from 0 up to the nth position. The last occurrence of the 
+#        character is not included.
 #
 # Example:
-# --------
 #    >> puts [GetUpTo "aa_bb_cc_dd" "_" 2]
-#    >> aa_bb
-#    
+#    >> aa_bb  
 proc String::GetUpTo {s c n} {
     set name ""
     

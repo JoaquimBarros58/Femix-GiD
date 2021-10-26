@@ -1,9 +1,6 @@
 # Prints the Face Load block.
 # 
-# Arguments:
-# ----------
-# load_case: The name of the load case title.
-# 
+# @param load_case The name of the load case title. 
 proc Writer::FaceLoad {load_case} {
     # If no face load is found, thus do not print this block.
     set nloads [SpdAux::Count "/*/container\[@n = 'loads' \]/condition\[@n = 'face' \]/group"]

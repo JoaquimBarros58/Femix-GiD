@@ -10,15 +10,10 @@ namespace eval General { }
 
 # Compares two lists.
 # 
-# Arguments:
-# ----------
-# list1: First list
-# list2: Second list
+# @param list1 First list
+# @param list2 Second list
 # 
-# Return:
-# -------
-# 0 if the list are equals or 1 otherwise.
-# 
+# @return 0 if the list are equals or 1 otherwise. 
 proc General::ListCompare {list1 list2} {
     set diff [lmap n [concat $list1 $list2] {
         # Skip the elements that are in both lists

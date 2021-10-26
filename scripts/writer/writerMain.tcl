@@ -1,5 +1,4 @@
 # This procedure writes the main parameters to file.
-#
 proc Writer::MainParameters {} {
     Writer::WriteLine <MAIN_PARAMETERS> 1
     Writer::WriteLine "MAIN_TITLE = My model ;" 2

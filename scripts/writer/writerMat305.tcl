@@ -1,9 +1,6 @@
 # Writes the material NLMM305 block (Interface 3D).
 #
-# Arguments:
-# ----------
-# nlmm305: List of nlmm305 materials.
-# 
+# @param nlmm305 List of nlmm305 materials.
 proc Writer::WriteNLMM305 {nlmm305} {
     variable fg; variable fi; variable fs
 

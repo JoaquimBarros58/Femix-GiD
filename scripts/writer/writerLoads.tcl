@@ -55,10 +55,7 @@ proc Writer::LoadCases {} {
 
 # Prints the Point Load block.
 # 
-# Arguments:
-# ----------
-# load_case: The name of the load case title.
-# 
+# @param load_case The name of the load case title.
 proc Writer::PointLoad {load_case} {
     # If no point load is found, thus do not print this block.
     set nloads [SpdAux::Count "/*/container\[@n = 'loads' \]/condition\[@n = 'point' \]/group"]
@@ -143,10 +140,7 @@ proc Writer::PointLoad {load_case} {
 
 # Prints the Prescribed Temperature Load block.
 # 
-# Arguments:
-# ----------
-# load_case: The name of the load case title.
-# 
+# @param load_case The name of the load case title. 
 proc Writer::TempVarLoad {load_case} {
     # If there is no load of this type found in the tree, thus do not print this block.
     set nloads [SpdAux::Count "/*/container\[@n = 'loads' \]/condition\[@n = 'temp_var' \]/group"]
@@ -209,10 +203,7 @@ proc Writer::TempVarLoad {load_case} {
 
 # Prints the Gravity Load block.
 # 
-# Arguments:
-# ----------
-# load_case: The name of the load case title.
-# 
+# @param load_case The name of the load case title.
 proc Writer::GravityLoad {node} {
     variable fg; variable fi; variable fs;
 

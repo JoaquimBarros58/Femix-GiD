@@ -1,9 +1,6 @@
 # Writes the support block.
 # 
-# Returns
-# --------
-# The number of supports.
-# 
+# @return The number of supports.
 proc Writer::Supports {} {
     variable fs; variable fi;
     variable comment
