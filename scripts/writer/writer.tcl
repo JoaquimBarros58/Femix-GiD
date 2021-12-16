@@ -12,13 +12,13 @@ namespace eval Writer {
     variable listMat;     # List of used materials.
     variable listGeom;    # List of used geomtries.
     variable listRule;    # List of used integration rules.
-    variable arrElem ;    # Array of elements
+    variable arrElem;     # Array of elements
 
     # Format
     # -------
-    variable fg "%-20g";    # Format for float numbers
-    variable fi "%-20d" ;   # Format for integer numbers
-    variable fs "%-20s" ;   # Format for strings
+    variable fg "%20g";    # Format for float numbers
+    variable fi "%20d" ;   # Format for integer numbers
+    variable fs "%20s" ;   # Format for strings
 
     # Settings
     # ---------
@@ -72,6 +72,8 @@ proc Writer::WriteInputFile {filename} {
     WriteLine "</MESH>\n" 1
 
     Writer::Loads
+
+    Writer::Combinations
 
     WriteLine </FEMIX_DATA_FILE_V4.0>
     
@@ -166,6 +168,11 @@ proc Writer::Nodes {} {
 proc Writer::Init {filename} {
     variable file
     variable femixVars
+
+    set Writer::comment $::Femix::femixVars(WriterComment)
+    set Writer::fs "$::Femix::femixVars(WriterStrFmt)"
+    set Writer::fi "$::Femix::femixVars(WriterIntFmt)"
+    set Writer::fg "$::Femix::femixVars(WriterDblFmt)"
 
     # Set the input filename.
     set file $filename

@@ -87,7 +87,7 @@ proc Import::Mesh {rtype mtype {file ""}} {
             set conn [lrange $row 2 end]
             set elType ""
 
-            if {$nc == 2} { 
+            if {$nc == 2 || $nc == 3} { 
                 set elType "Line"
             } elseif {$nc == 5} { 
                 set elType "Quadrilateral"

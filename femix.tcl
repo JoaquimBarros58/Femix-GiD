@@ -85,9 +85,14 @@ proc Femix::InitGlobalVariables {dir} {
     set femixVars(DevMode) "release" ; #can be dev or release
     # Default group
     set femixVars(Group) Default ; 
-    # Variables from the problemtype definition (femix.xml)
+    # Variables of the problemtype definition (femix.xml)
     array set femixVars [ReadProblemtypeXml [file join $femixVars(Path) femix.xml] Infoproblemtype {Name Version CheckMinimumGiDVersion}]
-    
+    # Variable used to format the input file.
+    set femixVars(WriterComment) 1;
+    set femixVars(WriterStrFmt) "%20s";
+    set femixVars(WriterIntFmt) "%20d";
+    set femixVars(WriterDblFmt) "%20g";
+
     # Load the Femix problemtype global and user preferences
     Femix::LoadPreferences
 }
@@ -115,18 +120,19 @@ proc Femix::LoadCommonScripts {} {
         uplevel #0 [list source $script]
     }
     # Spd scripts
-    set dir [file join $root scripts]
     foreach script [glob [file join $dir spd *.tcl]] {
         uplevel #0 [list source $script]
     }
     # Utilities scripts
-    set dir [file join $root scripts]
     foreach script [glob [file join $dir utilities *.tcl]] {
         uplevel #0 [list source $script]
     }
     # Writer scripts
-    set dir [file join $root scripts]
     foreach script [glob [file join $dir writer *.tcl]] {
+        uplevel #0 [list source $script]
+    }
+    # Wins scripts
+    foreach script [glob [file join $dir wins *.tcl]] {
         uplevel #0 [list source $script]
     }
 }
@@ -154,7 +160,7 @@ proc Femix::SavePreferences { } {
     #do not save preferences starting with flag gid.exe -c (that specify read only an alternative file)
     if { [GiD_Set SaveGidDefaults] } {
         variable femixVars
-        set varsToSave [list DevMode RenumberMethod]
+        set varsToSave [list DevMode RenumberMethod WriterComment WriterStrFmt WriterIntFmt WriterDblFmt]
         set preferences [dict create]
         foreach v $varsToSave {
             if {[info exists femixVars($v)]} {

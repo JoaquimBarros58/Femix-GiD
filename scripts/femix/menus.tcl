@@ -63,6 +63,10 @@ proc Femix::ChangeMenus {} {
     GidChangeDataLabel "Interval Data" ""
     GidChangeDataLabel "Problem Data" ""
     GidChangeDataLabel "Local axes" ""
+    # Add new options to data menu.
+    GidAddUserDataOptions "---" ""
+    GidAddUserDataOptions "Combinations" "CombWin::Open"
+
     # Adds the FEMIX website to Help menu.
     GiDMenu::InsertOption "Help" [list ---] end PREPOST {} "" "" insertafter
     GiDMenu::InsertOption "Help" [list [_ "Visit %s web..." FEMIX]] end PREPOST [list VisitWeb "http://gidfemix.civil.uminho.pt"] "" "" insertafter

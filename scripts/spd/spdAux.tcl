@@ -113,14 +113,42 @@ proc SpdAux::GetNumLoadCases {} {
     return [SpdAux::Count "/*/container\[@n = 'lcases' \]/blockdata"]
 }
 
+# Get the loads cases names.
+# 
+# @return The names of the load cases.
+proc SpdAux::GetLoadCasesNames {} {
+    set root [$::gid_groups_conds::doc documentElement]
+    set lcs [SpdAux::GetLoadCases $root]
+    set names {}
+
+    foreach l [split $lcs ,] {
+        lappend names [lindex $l 1]
+    }
+
+    return $names
+}
+
+# Gets the id of a given load case name. The id is its position in the tree.
+# 
+# @param name The load case name.
+# @return The index of the load case.
+proc SpdAux::GetLoadCaseId {name} {
+    set lcs [SpdAux::GetLoadCasesNames]
+    for {set i 1} {$i <= [llength $lcs]} {incr i} {
+        if {[lindex $lcs $i] == $name} {
+            return $i
+        }
+    }
+}
+
 # Counts the number of children of a given node.
 # 
 # @param xp Xpath to the node.
 # 
 # @return The number of childrens.
 proc SpdAux::Count {xpath} {
-    set document [$::gid_groups_conds::doc documentElement]
-    set nodes [$document selectNodes $xpath]
+    set root [$::gid_groups_conds::doc documentElement]
+    set nodes [$root selectNodes $xpath]
     return [llength $nodes]
 }
 
