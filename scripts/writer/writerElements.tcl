@@ -5,7 +5,6 @@
 # printing, but the GiD procedure for printing all connectivities (faster) does
 # not provide a way to control some aspects related to specific elements, 
 # e.g. ordering of the nodes for truss elements, interface numbering, etc.
-#
 proc Writer::ElementNodes {} {
     variable fi; variable fs;
     variable arrElem
@@ -59,7 +58,6 @@ proc Writer::ElementNodes {} {
 # order (from id=1 to id=N), e.g. if a linear element has an id = 30 it will be
 # the first one to be printed, this will happen because the linear elements are
 # being called first in this code. 
-# 
 proc Writer::ElementNodesWrite {} {
     variable fi; variable fs;
 
@@ -95,7 +93,6 @@ proc Writer::ElementNodesWrite {} {
 # This procedure prints the element properties using femix range feature, i.e. 
 # if the elements have the same properties they will be written in one single
 # line, e.g. [1-10].
-# 
 proc Writer::ElementProperties {} {
     variable fs ; variable fi
     variable arrElem
@@ -176,12 +173,9 @@ proc Writer::ElementProperties {} {
 
 # Gets an element from the element array.
 # 
-# Arguments:
-# ----------
-# i: Index of the array.
+# @param i Index of the array.
 # 
-# Returns:
-# --------
+# @return
 # A list containing the following data:
 # index 0: group name
 # index 1: element id
@@ -233,7 +227,6 @@ proc Writer::GetArrayItem {i} {
 
 # Writes the element properties to the input file. 
 # This procedure prints one line per element property.
-# 
 proc Writer::ElementPropSingle {} {
     variable fs ; variable fi
     variable arrElem

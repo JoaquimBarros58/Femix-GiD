@@ -96,9 +96,19 @@ proc Event::WriteInputFile {{filename ""}} {
 # @param app name of the executable, it can be prefemix, femix or posfemix.
 proc Event::RunExec {app} {
     if {[Femix::IsModelSaved] == 1} {
-        # Command to run.
         set bin [file join $::Femix::femixVars(Path) bin $app.exe]
-        exec cmd /c start cmd /k $bin [Femix::GetJob]
+        set OS [lindex $::tcl_platform(platform) 0]
+        if { $OS == "Windows" } {        
+            exec cmd /c start cmd /k $bin [Femix::GetJob]
+        } else {
+            catch {exec wine &} res
+
+            if {![string is integer -strict $res]} {
+                WarnWin "Wine is NOT installed on this computer! You must install it to use FEMIX."
+            } else {
+                exec xterm -hold -e wine $bin [Femix::GetJob]
+            }
+        }
     }
 }
 
@@ -214,31 +224,6 @@ proc Event::ImportPva {} {
 # This event is dispatched when the user clicks on the menu Femix->Test.
 # This menu is only available in dev mode.
 proc Event::Debug {} {
-    set path [Femix::GetProjecDir]
-    set name [Femix::GetModelName].cmb
-    set file [open [file join $path $name] "w"]
-
-    set l {}
-    for {set i 0} {$i < 350} {incr i} {
-        lappend l [dict create title "My combination $i" group "default $i" first $i last [expr $i + 1]]
-    }
-
-    foreach item $l {
-        puts $file "{$item}"
-    }
-
-    close $file
-
-    set filename [file join $path $name]
-
-    set file [open $filename "r"]
-    set data [read $file]
-    close $file
-
-    WarnWin [lindex $data 0]
-    set d [General::ListToDict [lindex $data 0]]
-    WarnWin [dict get $d group]
-
 }
 
 proc Event::ModifyPreferencesWindow { root } {

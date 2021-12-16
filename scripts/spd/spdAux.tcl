@@ -16,33 +16,22 @@ namespace eval SpdAux {
 # the beginning of the keyword. For example: if the data tree value is "static"
 # the function will return "_STATIC".
 # 
-# Arguments:
-# ----------
-# xp: String with the path to the node.
+# @param xp String with the path to the node.
 # 
-# Return:
-# -------
-# The femix keyword.
-# 
+# @return The femix keyword.
 proc SpdAux::GetTag {xp} {
     return _[string toupper [SpdAux::GetValue $xp]]
 }
 
 # Converts Yes/No data tree value to femix keyword _YES/_NO.
 # 
-# Arguments:
-# ----------
-# xp: String with the path to the node.
+# @param xp String with the path to the node.
 # 
-# Return:
-# -------
-# Thee femix keyword.
+# @return Thee femix keyword.
 # 
 # Example:
-# --------
 #    set path {/*/container[@n="main_parameters"]//value[@n="analysis_type"]}
 #    SpdAux::GetTagYesNo $path
-#
 proc SpdAux::GetTagYesNo {xp} {
     if {[SpdAux::GetValue $xp] == "Yes"} { 
         return "_Y" 
@@ -53,17 +42,12 @@ proc SpdAux::GetTagYesNo {xp} {
 
 # Get a value from the data tree.
 # 
-# Arguments:
-# ----------
-# xp: String with the path to the node.
-# att: Attribute, default is v. It can be n for name or v for value.
+# @param xp String with the path to the node.
+# @param att Attribute, default is v. It can be n for name or v for value.
 # 
-# Return:
-# -------
-# The node value.
+# @return The node value.
 # 
 # Example:
-# --------
 #    set path {/*/container[@n="main_parameters"]//value[@n="analysis_type"]}
 #    SpdAux::GetValue $path
 # 
@@ -75,19 +59,13 @@ proc SpdAux::GetValue {xp {att v}} {
 
 # Gets the values from a specific node.
 # 
-# Arguments:
-# ----------
-# node: Data tree node.
-# xp: String with the xpath to the node.
+# @param node Data tree node.
+# @param xp String with the xpath to the node.
 # 
-# Return:
-# -------
-# The value (with units) correspondent to the given data tree node.
+# @return The value (with units) correspondent to the given data tree node.
 # 
 # Example:
-# --------
 #    SpdAux::GetNodeValue $gNode ".//value\[@n='[lindex $xpld $i]']"
-# 
 proc SpdAux::GetNodeValue {node xp} {
     set value [$node selectNodes $xp]
     # return [get_domnode_attribute $value v]
@@ -96,20 +74,14 @@ proc SpdAux::GetNodeValue {node xp} {
 
 # Gets the type of a database node.
 #
-# Arguments:
-# ----------
-# cname: Name of the container which gather all nodes of the database.
-# block: Name of the blockdata used to represent the database.
-# name: Name of the database node.
+# @param cname Name of the container which gather all nodes of the database.
+# @param block Name of the blockdata used to represent the database.
+# @param name Name of the database node.
 # 
-# Return:
-# ----------
-# The corresponding type of the database node. For example, to get the type of 
-# the LIN_ISO material node in the database materials we do:
-#    SpdAux::GetType materials material LIN_ISO
-# The procedure will return: 
-#     _LIN_ISO
-# 
+# @return The corresponding type of the database node. For example, to get the type of 
+#         the LIN_ISO material node in the database materials we do:
+#         SpdAux::GetType materials material LIN_ISO
+#         The procedure will return: _LIN_ISO
 proc SpdAux::GetDbType {cname block name} {
     set root [$::gid_groups_conds::doc documentElement]
     set xp {/*/container[@n=$cname]//}
@@ -120,17 +92,12 @@ proc SpdAux::GetDbType {cname block name} {
 
 # Gets a value from a specific database node.
 #
-# Arguments:
-# ----------
-# cname: Name of the container which gather all nodes of the database.
-# block: Name of the blockdata used to represent the database.
-# name: Name of the database node.
-# value: Value of the node field.
+# @param cname Name of the container which gather all nodes of the database.
+# @param block Name of the blockdata used to represent the database.
+# @param name Name of the database node.
+# @param value Value of the node field.
 # 
-# Return:
-# ----------
-# The corresponding value.
-# 
+# @return The corresponding value.
 proc SpdAux::GetDbValue {cname block name value} {
     set root [$::gid_groups_conds::doc documentElement]
     set xp1 {/*/container[@n=$cname]//}
@@ -141,10 +108,7 @@ proc SpdAux::GetDbValue {cname block name value} {
 
 # Counts the number of Load Cases.
 # 
-# Return:
-# -------
-# The number of load cases in the Load Cases node.
-# 
+# @return The number of load cases in the Load Cases node.
 proc SpdAux::GetNumLoadCases {} {
     return [SpdAux::Count "/*/container\[@n = 'lcases' \]/blockdata"]
 }
@@ -179,14 +143,9 @@ proc SpdAux::GetLoadCaseId {name} {
 
 # Counts the number of children of a given node.
 # 
-# Arguments:
-# ----------
-# xp: Xpath to the node.
+# @param xp Xpath to the node.
 # 
-# Return:
-# -------
-# The number of childrens.
-# 
+# @return The number of childrens.
 proc SpdAux::Count {xpath} {
     set root [$::gid_groups_conds::doc documentElement]
     set nodes [$root selectNodes $xpath]
@@ -199,7 +158,6 @@ proc SpdAux::Count {xpath} {
 
 # Auxiliary procs invoked from the tree (see .spd xml description)
 # This procedure return the list of materials stored in the material tree node.
-#
 proc SpdAux::GetMaterials {domNode args} {
     set xPath {//container[@n="materials"]}
     set domMaterials [$domNode selectNodes $xPath]
@@ -220,7 +178,6 @@ proc SpdAux::GetMaterials {domNode args} {
 
 # This procedure return the list of gemetries stored in the geometry
 # tree node.
-#
 proc SpdAux::GetGeom1D {domNode args} {
     set xPath {//container[@n="geometries"]}
     set domGeoms [$domNode selectNodes $xPath]
@@ -245,7 +202,6 @@ proc SpdAux::GetGeom1D {domNode args} {
 
 # This procedure return the list of geometries stored in the geometry
 # tree node.
-#
 proc SpdAux::GetGeom2D {domNode args} {
     set xPath {//container[@n="geometries"]}
     set domGeoms [$domNode selectNodes $xPath]
@@ -270,7 +226,6 @@ proc SpdAux::GetGeom2D {domNode args} {
 
 # This procedure return the list of integration rules stored in the 
 # integrations tree node.
-#
 proc SpdAux::GetIntegrations {domNode args} {
     set xPath {//container[@n="integrations"]}
     set domIntegrations [$domNode selectNodes $xPath]
@@ -290,7 +245,6 @@ proc SpdAux::GetIntegrations {domNode args} {
 }
 
 # Gets the name of all groups created in the tree.
-# 
 proc SpdAux::GetGroups {} {
     set grpList [GiD_Groups list ""]
     return [join $grpList ,]
@@ -298,21 +252,15 @@ proc SpdAux::GetGroups {} {
 
 # Finds the id of a group in the group list.
 # 
-# Arguments:
-# ----------
-# name: Name of the group.
+# @param name Name of the group.
 # 
-# Return:
-# -------
-# The index of the group in the group list.
-# 
+# @return The index of the group in the group list.
 proc SpdAux::GetGroupId {name} {
     set grpList [GiD_Groups list ""]
     return [lsearch $grpList $name]
 }
 
 # Gets the load cases nodes.
-# 
 proc SpdAux::GetLoadCases {domNode args} {
     set xPath {//container[@n="lcases"]}
     set domLcases [$domNode selectNodes $xPath]

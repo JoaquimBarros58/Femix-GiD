@@ -15,12 +15,9 @@ namespace eval Import {
 
 # Inits the namespace variables and add the GiD header to the file.
 #
-# Arguments:
-# ----------
-# rtype: Result type. It will be used as suffix of the post.res file. 
+# @param rtype Result type. It will be used as suffix of the post.res file. 
 #        e.g. if the rtype is "di" thus the result file will be 
 #        named mymodel_di.post.res 
-#
 proc Import::Init {rtype {file ""}} {
     set dir [Femix::GetProjecDir $file]
     set model [Femix::GetModelName $file]_$rtype
@@ -38,19 +35,14 @@ proc Import::Close {} {
 
 # Converts femix mesh file to GiD mesh file. 
 #
-# Arguments:
-# ----------
-# rtype: Result type, e.g. di, se, sa, etc.
-# mesh: Type of mesh associated to the pva file, it can be connected (me) mesh
-#       or unconnected (um) mesh.
-# file: Mesh file to be imported. If the file is not provided, it will scan
-#       the project directory and search for files with "mtype" extensions, i.e.
-#       me.s3d or um.s3d.
+# @param rtype Result type, e.g. di, se, sa, etc.
+# @param mesh Type of mesh associated to the pva file, it can be connected (me) mesh
+#        or unconnected (um) mesh.
+# @param file Mesh file to be imported. If the file is not provided, it will scan
+#        the project directory and search for files with "mtype" extensions, i.e.
+#        me.s3d or um.s3d.
 #
-# Return:
-# --------
-# 0 if the mesh is successfully imported, or 0 otherwise.
-#
+# @return 0 if the mesh is successfully imported, or 0 otherwise.
 proc Import::Mesh {rtype mtype {file ""}} {
     set dir [Femix::GetProjecDir $file]
     set model [Femix::GetModelName $file]_
@@ -175,19 +167,14 @@ proc Import::Mesh {rtype mtype {file ""}} {
 
 # Import PVA files.
 #
-# Arguments:
-# ----------
-# rtype: Result type, e.g. di, se, sa, etc.
-# mesh: Type of mesh associated to the pva file, it can be connected (me) mesh
-#       or unconnected (um) mesh.
-# file: Pva file to be imported. If the file is not provided, it will scan the
-#       project directory and search for pva files with "rtype" extensions, i.e.
-#       se.pva, sa.pva, di.pva, etc.
+# @param rtype Result type, e.g. di, se, sa, etc.
+# @param mesh Type of mesh associated to the pva file, it can be connected (me) mesh
+#        or unconnected (um) mesh.
+# @param file Pva file to be imported. If the file is not provided, it will scan the
+#        project directory and search for pva files with "rtype" extensions, i.e.
+#        se.pva, sa.pva, di.pva, etc.
 #
-# Return:
-# --------
-# 0 if the pva and mesh files are successfully imported, or 0 otherwise.
-#
+# @return 0 if the pva and mesh files are successfully imported, or 0 otherwise.
 proc Import::PvaResults {rtype mesh {file ""}} {
     # Creates the mesh associated to the res.
     if {[Import::Mesh $rtype $mesh $file] == 1} {

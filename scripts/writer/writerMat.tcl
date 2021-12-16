@@ -1,5 +1,4 @@
 # Writes the materials blocks to the input file.
-# 
 proc Writer::Materials {} {
     variable listMat
 
@@ -37,10 +36,7 @@ proc Writer::Materials {} {
 
 # Writes the linear isotropic block.
 #
-# Arguments:
-# ----------
-# liniso: List of lin iso materials.
-# 
+# @param liniso List of lin iso materials. 
 proc Writer::WriteLinIso {liniso} {
     variable fg ; variable fi ; variable fs
 

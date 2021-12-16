@@ -1,5 +1,4 @@
 # Writes the geometry blocks to the input file.
-# 
 proc Writer::Geometry {} {
     variable listGeom
     set cross []
@@ -27,10 +26,7 @@ proc Writer::Geometry {} {
 
 # Writes the cross-section areas
 #
-# Arguments:
-# ----------
-# cross: List of cross-section areas.
-# 
+# @param cross List of cross-section areas. 
 proc Writer::WriteCross {cross} {
     variable fs; variable fi; variable fg
 

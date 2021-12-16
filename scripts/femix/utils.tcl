@@ -55,15 +55,10 @@ proc Femix::GetModelName {{file ""}} {
 
 # Gets the project directory.
 # 
-# Arguments:
-# ----------
-# file: Absolute path of the model filename. If this argument is not provided
-#       then it will return the current project directory path.
+# @param file Absolute path of the model filename. If this argument is not provided
+#        then it will return the current project directory path.
 #
-# Return
-# -------
-# The path to the project directory.
-#
+# @return The path to the project directory.
 proc Femix::GetProjecDir {{file ""}} {
     if {$file == ""} {
         return [GiD_Info Project ModelName].gid
@@ -74,22 +69,17 @@ proc Femix::GetProjecDir {{file ""}} {
 
 # Gets the current job, i.e. the absolute path to femix dat file.
 #
-# Return
-# -------
-# The name of the femix dat file containing the absolute path to it.
+# @return The name of the femix dat file containing the absolute path to it.
+#
 # For example:
 #    C:\Data\Projects\beam
-#
 proc Femix::GetJob {} {
     return [file join [Femix::GetProjecDir] [Femix::GetModelName]]
 }
 
 # Gets the dimension number of the model.
 # 
-# Return
-# -------
-# 2 for 2D or 3 for 3D
-# 
+# @return 2 for 2D or 3 for 3D
 proc Femix::GetNumDimension {} {
     set bbox [GiD_Info bounding_box]
     set check [expr {[lindex $bbox 5] - [lindex $bbox 4]}]
@@ -102,10 +92,7 @@ proc Femix::GetNumDimension {} {
 
 # Checks if the model is saved.
 # 
-# Return
-# -------
-# It returns 1 if saved, or 0 otherwise.
-# 
+# @return It returns 1 if saved, or 0 otherwise.
 proc Femix::IsModelSaved {} {  
     # Model must be saved
     if {[GiD_Info Project Modelname] eq "UNNAMED"} {
@@ -118,15 +105,10 @@ proc Femix::IsModelSaved {} {
 
 # Gets the range of a given list of integers.
 #
-# Arguments:
-# ----------
-# items: List of integer values.
+# @param items List of integer values.
 # 
-# Return:
-# ----------
-# The minimum and maximum integer formated according to femix range style.
-# e.g. [1-56]
-# 
+# @return The minimum and maximum integer formated according to femix range style.
+#         e.g. [1-56]
 proc Femix::GetRange {items} {
     if {$items == ""} { return "" }
 
@@ -141,15 +123,10 @@ proc Femix::GetRange {items} {
 # the list of allowed words. This situation happens when femix allows
 # a keyword or constant value.
 #
-# Arguments:
-# ----------
-# value: Value to be checked.
-# lst: List of allowed values.
+# @param value Value to be checked.
+# @param lst List of allowed values.
 # 
-# Return:
-# ----------
 # The numeric value or the allowed word.
-# 
 proc Femix::CheckValue {value lst} {
     set val [String::IsNumeric $value]
     if {$val != ""} { # is the value a number?...
@@ -164,10 +141,7 @@ proc Femix::CheckValue {value lst} {
 
 # Checks if the mesh elements are quadratic or linear.
 #
-# Return:
-# ----------
-# 1 if quadratic or 0 if linear.
-# 
+# @return 1 if quadratic or 0 if linear.
 proc Femix::IsQuadratic {} {
     return [GiD_Info Project Quadratic]
 }
@@ -182,14 +156,9 @@ proc Femix::IsQuadratic {} {
 #   |         |        |         |
 #   1----5----2        1----2----3
 #
-# Arguments:
-# ----------
-# id: Element id.
+# @param id Element id.
 # 
-# Return:
-# ----------
-# The connectivity according to femix ordering.
-# 
+# @return The connectivity according to femix ordering. 
 proc Femix::GetConn {id} {
     set elConn [GiD_Mesh get element $id connectivities]
     set nn [llength $elConn]
@@ -235,8 +204,6 @@ proc Femix::GetConn {id} {
 # ============================================================================
 # Converts from GiD
 # TODO: WRITE FUNCTION TO CONVERT CONNECTIVITIES FROM GID TO FEMIX
-#
-#
 proc Femix::ElemConnOrdering {c} {
     set size [llength $c]
     set newc {}
@@ -316,7 +283,6 @@ proc GidToFemix {c} {
 # ============================================================================
 
 # Creates the posfemix bat file and saves it to the project folder.
-# 
 proc Femix::CreatePosBat {} {
     set dir [Femix::GetProjecDir]
     set model [Femix::GetModelName]
@@ -355,14 +321,9 @@ proc Femix::CreatePosBat {} {
 # (D1,D2,D3). For 2D problem, it changes the plane to fit femix requirements, 
 # i.e. the XY plane will be changed to YZ plane.
 #
-# Arguments:
-# ----------
-# dir: The cartesian direction: x, y or z.
+# @param dir The cartesian direction: x, y or z.
 #
-# Return:
-# -------
-# The corresponding direction using femix symbol.
-#
+# @return The corresponding direction using femix symbol.
 proc Femix::GetDirectionLabel {dir} {
     set dim [Femix::GetNumDimension]
     set dir [string toupper $dir]

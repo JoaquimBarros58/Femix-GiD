@@ -1,9 +1,6 @@
 # Writes the material NLMM301 block (Interface 2D).
 #
-# Arguments:
-# ----------
-# nlmm301: List of nlmm301 materials.
-# 
+# @param nlmm301 List of nlmm301 materials.
 proc Writer::WriteNLMM301 {nlmm301} {
     variable fg; variable fi; variable fs
 
