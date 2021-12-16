@@ -209,10 +209,36 @@ proc Event::ImportPva {} {
     }
 }
 
+
 # Procedure used for testing during development.
 # This event is dispatched when the user clicks on the menu Femix->Test.
 # This menu is only available in dev mode.
 proc Event::Debug {} {
+    set path [Femix::GetProjecDir]
+    set name [Femix::GetModelName].cmb
+    set file [open [file join $path $name] "w"]
+
+    set l {}
+    for {set i 0} {$i < 350} {incr i} {
+        lappend l [dict create title "My combination $i" group "default $i" first $i last [expr $i + 1]]
+    }
+
+    foreach item $l {
+        puts $file "{$item}"
+    }
+
+    close $file
+
+    set filename [file join $path $name]
+
+    set file [open $filename "r"]
+    set data [read $file]
+    close $file
+
+    WarnWin [lindex $data 0]
+    set d [General::ListToDict [lindex $data 0]]
+    WarnWin [dict get $d group]
+
 }
 
 proc Event::ModifyPreferencesWindow { root } {
@@ -242,12 +268,11 @@ proc Event::ManagePreferences { cmd name {value ""}} {
             }
         }
         "SetValue" {
-            if {$name eq "DevMode"} { 
-                set ::Femix::femixVars($name) $value
-            }
             if {$name eq "RenumberMethod"} {
                 set ::Femix::femixVars($name) $value
                 GiD_Process Mescape Utilities Variables RenumberMethod $value escape
+            } else {
+                set ::Femix::femixVars($name) $value
             }
         }
         "GetDefaultValue" {

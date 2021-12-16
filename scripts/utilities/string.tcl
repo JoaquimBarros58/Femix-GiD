@@ -123,5 +123,40 @@ proc String::GetUpTo {s c n} {
     return [string range $name 0 end-1]
 }
 
+# Check if the string is an integer.
+# 
+# @param newval Value to be checked.
+# @return 1 if the value is an integer, otherwise it returns 0.
+proc CheckInteger {newval} {
+   return [expr {[regexp {^[0-9]*$} $newval]}]
+}
+
+# Check if the string is a float.
+# 
+# @param newval Value to be checked.
+# @return 1 if the value is a float, otherwise it returns 0.
+proc CheckFloat {newval} {
+   return [expr {[regexp {[+-]?([0-9]*[.])?[0-9]+} $newval]}]
+}
+
+# Gets the values of the range, the range has the following format: 1-10.
+# 
+# @param s Range string.
+# @return A list containing the start and end of the range, e.g. 1-10 => {1 10}.
+#         If the given string is not in the correct format it returns null.
+proc String::GetRange {s} {
+    set s1 [string map {" " ""} $s]
+    set v [split $s1 -]
+
+    if {[llength $v] != 2} {return}
+    
+    foreach i $v {
+        set checked [CheckInteger [string trim $i]]
+        if {!$checked} {return}
+    }
+    
+    return $v
+}
+
 
 

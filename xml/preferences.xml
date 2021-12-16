@@ -1,11 +1,22 @@
 <group name="femix_preferences" label="Femix">
-    <labelframe name="GenOpt" label="General options">
+    <labelframe name="genOpt" label="General options">
         <combobox name="DevMode" variable="DevMode" variablemanager="Event::ManagePreferences" label="Mode" 
             help="Show/Hide some experimental features">
             <option value="dev" label="Developer"/>
             <option value="release" label="Release"/>
         </combobox>
-
+    </labelframe>
+    <labelframe name="inpOpt" label="Input File options">
+        <entry name="srtfmt" label="String format" variable="WriterStrFmt" 
+        variablemanager="Event::ManagePreferences" />
+        <entry name="intfmt" label="Integer format" variable="WriterIntFmt" 
+        variablemanager="Event::ManagePreferences" />
+        <entry name="dblfmt" label="Double format" variable="WriterDblFmt" 
+        variablemanager="Event::ManagePreferences" />
+        <checkbutton name="comment" label="Write comments" variable="WriterComment" 
+        variablemanager="Event::ManagePreferences" />
+    </labelframe>
+    <labelframe name="mshOpt" label="Mesh options">
         <combobox name="RenumberMethod" variable="RenumberMethod" variablemanager="Event::ManagePreferences" label="Mesh options" 
             help="
             Options:\n\n
