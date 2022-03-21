@@ -20,7 +20,7 @@ proc Writer::LoadCases {} {
 
         # Gets the group name
         set group [SpdAux::GetNodeValue $node "./value\[@n = 'group' \]"]
-        set itype _[SpdAux::GetNodeValue $node "./value\[@n = 'itype' \]"]
+        set itype [SpdAux::GetNodeValue $node "./value\[@n = 'itype' \]"]
         set iname _[SpdAux::GetNodeValue $node "./value\[@n = 'iname' \]"]
 
         Writer::WriteLine "<LOAD_CASE_PARAMETERS>" 3

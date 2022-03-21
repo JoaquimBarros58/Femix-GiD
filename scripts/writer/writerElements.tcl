@@ -29,6 +29,7 @@ proc Writer::ElementNodes {} {
     # Sorting the array of elements by element id.
     set sorted [lsort -integer -increasing [array names arrElem]]
 
+   
     foreach i $sorted  {
         set e $Writer::arrElem($i)
         set etype _[dict get $e type]
@@ -39,9 +40,15 @@ proc Writer::ElementNodes {} {
         # If the element is interface 2D we need to change the nodes numbering
         # order.
         if {$etype == "_INTERFACE_LINE_2D"} {
-            if {[Femix::IsQuadratic] == 0} { # linear interface
+            if {[Femix::IsQuadratic] == 1} { # quadratic element
+                # Removes middle nodes.
+                set conn [lreplace $conn 3 3]
+                set conn [lreplace $conn end end]
+                # Now invert the order of the last three nodes.
+                set conn [lreplace $conn end-2 end [lindex $conn end] [lindex $conn end-1] [lindex $conn end-2]]
+                set size [llength $conn]
+            } else { # linear element
                 set conn [lreplace $conn end-1 end [lindex $conn end] [lindex $conn end-1]]
-            } else { # quadratic element
             }
         }
 
