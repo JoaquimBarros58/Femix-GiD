@@ -6,7 +6,6 @@
 # not provide a way to control some aspects related to specific elements, 
 # e.g. ordering of the nodes for truss elements, interface numbering, etc.
 proc Writer::ElementNodes {} {
-    variable fi; variable fs;
     variable arrElem
 
     Writer::WriteLine <ELEMENT_NODES> 2
@@ -31,7 +30,7 @@ proc Writer::ElementNodes {} {
 
    
     foreach i $sorted  {
-        set e $Writer::arrElem($i)
+        set e $arrElem($i)
         set etype _[dict get $e type]
         set id [dict get $e id]
         set size [llength [dict get $e conn]]
@@ -265,7 +264,7 @@ proc Writer::ElementPropSingle {} {
 
     # Print to file.
     foreach i [lsort -integer -increasing [array names Writer::arrElem]]  {
-        set e $Writer::arrElem($i)
+        set e $arrElem($i)
 
         set id [dict get $e id]
         set etype _[dict get $e type]

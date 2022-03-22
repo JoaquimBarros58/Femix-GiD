@@ -198,7 +198,7 @@ proc Writer::Init {filename} {
 # 
 # @param part The number of the part 1, 2 or 3.
 proc Writer::Parts {part} {
-    # xpath for parts_1d node.
+    # xpath for part nodes.
     if {$part == 1} {
         set xp1 {./container[@n="parts"]/condition[@n="parts_1d"]/group}
     } elseif {$part == 2} {
