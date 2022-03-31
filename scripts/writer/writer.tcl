@@ -71,6 +71,8 @@ proc Writer::WriteInputFile {filename} {
 
     WriteLine "</MESH>\n" 1
 
+    Writer::ArcLength
+
     Writer::Loads
 
     Writer::Combinations
@@ -290,4 +292,25 @@ proc Writer::WriteLine {{str ""} {ind 0} {file 1} {c " "}} {
     } else {
         return $s
     }
+}
+
+# Prints the arc length block
+proc Writer::ArcLength {} {
+    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'activate' \]"
+    set arc [SpdAux::GetValue $path]
+    if {$arc == "No"} { return }
+
+    Writer::WriteLine <ARC_LENGTH_PARAMETERS> 1
+
+    Writer::WriteLine "DISPLACEMENT_CONTROL = _Y ;" 2
+    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'node' \]"
+    Writer::WriteLine "POINT_NUMBER = [SpdAux::GetValue $path] ;" 2
+    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'dof' \]"
+    set dof _[Femix::GetDirectionLabel [SpdAux::GetValue $path]]
+    Writer::WriteLine "DEGREE_OF_FREEDOM = $dof ;" 2
+    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'incr' \]"
+    Writer::WriteLine "DISPLACEMENT_INCREMENT = [SpdAux::GetValue $path] ;" 2
+    
+    Writer::WriteLine </ARC_LENGTH_PARAMETERS> 1
+    Writer::WriteLine
 }

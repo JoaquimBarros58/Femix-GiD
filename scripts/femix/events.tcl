@@ -63,6 +63,15 @@ proc Event::BeforeWriteCalculationFile {file} {
     Femix::CreatePosBat
 }
 
+# It will be called just before save a GiD project. 
+#
+# @param modelname is the path of the model folder, without the .gid extension.
+# 
+# @return -cancel- if the writting is cancelled.
+proc Event::GiD_Event_BeforeSaveGIDProject { modelname } {
+    Event::WriteInputFile
+}
+
 # It will be called just after the analysis finishes.
 # 
 # @param filename the name of the output calculation file 
@@ -98,7 +107,8 @@ proc Event::RunExec {app} {
     if {[Femix::IsModelSaved] == 1} {
         set bin [file join $::Femix::femixVars(Path) bin $app.exe]
         set OS [lindex $::tcl_platform(platform) 0]
-        if { $OS == "Windows" } {        
+  
+        if { $OS == "windows" } {        
             exec cmd /c start cmd /k $bin [Femix::GetJob]
         } else {
             catch {exec wine &} res
@@ -138,7 +148,8 @@ proc Event::CleanProject {} {
     # List of extensions that will be deleted.
     set files {"*_di.pva" "*_gl.dat" "*_ctrl.dat" "*_dr.bin" "_ep.bin" \
                "*_gl.bin" "*_ep.bin" "*_se.pva" "*_sa.pva" "*_me.s3d" \
-               "*_um.s3d" "*_dm.s3d" "*.post.msh" "*.post.res"}
+               "*_um.s3d" "*_dm.s3d" "*.post.msh" "*.post.res" \
+               "*.bin"}
 
     set answer [tk_messageBox -message "Do you wanna clean the project folder?\nOnly Femix files will be deleted." -type yesno -icon question]
     switch -- $answer {

@@ -146,6 +146,7 @@ proc Femix::RegisterGiDEvents {} {
     GiD_RegisterEvent GiD_Event_BeforeRunCalculation Event::BeforeRunCalculation PROBLEMTYPE Femix
     GiD_RegisterEvent GiD_Event_AfterRunCalculation Event::AfterRunCalculation PROBLEMTYPE Femix
     # Write
+    GiD_RegisterEvent GiD_Event_BeforeSaveGIDProject Event::GiD_Event_BeforeSaveGIDProject PROBLEMTYPE Femix
     GiD_RegisterEvent GiD_Event_BeforeWriteCalculationFile Event::BeforeWriteCalculationFile PROBLEMTYPE Femix
     GiD_RegisterEvent GiD_Event_AfterWriteCalculationFile Event::AfterWriteCalculationFile PROBLEMTYPE Femix
     # End

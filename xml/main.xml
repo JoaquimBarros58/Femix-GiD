@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <container n="main_parameters" pn="Main Parameters" icon="main"> 
-    <value n="analysis_type" pn="Analysis Type" values="Static" v="Static" show_in_window="0" />
+    <value n="main_title" pn="Main Title" v="My Model" show_in_window="1" />
+
+    <value n="analysis_type" pn="Analysis Type" values="Static" v="Static" show_in_window="1" />
    
     <!-- Phase window -->
     <container n="phases" pn="Number of Phases" icon="main">
