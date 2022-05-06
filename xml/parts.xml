@@ -3,17 +3,18 @@
 <container n="parts" pn="Parts" icon="parts">
     <condition  n="parts_1d" pn="1D" icon="parts" ov="line">
         <value n="element" pn="Element" 
-            values="CABLE_2D,CABLE_3D,EMB_CABLE_2D,EMB_CABLE_3D,FRAME_2D,FRAME_3D,TRUSS_2D,TRUSS_3D,TIMOSHENKO_BEAM_2D,TIMOSHENKO_BEAM_3D"
+            values="CABLE_2D,CABLE_3D,EMB_CABLE_2D,EMB_CABLE_3D,FRAME_2D,FRAME_3D,INTERFACE_LINE_2D,TIMOSHENKO_BEAM_2D,TIMOSHENKO_BEAM_3D,TRUSS_2D,TRUSS_3D"
             v="TRUSS_2D">
 
             <dependencies value='CABLE_2D' node="../value[@n='integration']" att1="state" v1='normal'/> 
             <dependencies value='CABLE_3D' node="../value[@n='integration']" att1="state" v1='normal'/> 
             <dependencies value='EMB_CABLE_2D' node="../value[@n='integration']" att1="state" v1='normal'/> 
             <dependencies value='EMB_CABLE_3D' node="../value[@n='integration']" att1="state" v1='normal'/> 
-            <dependencies value='TIMOSHENKO_BEAM_2D' node="../value[@n='integration']" att1="state" v1='normal'/> 
-            <dependencies value='TIMOSHENKO_BEAM_3D' node="../value[@n='integration']" att1="state" v1='normal'/> 
             <dependencies value='FRAME_2D' node="../value[@n='integration']" att1="state" v1='hidden'/> 
             <dependencies value='FRAME_3D' node="../value[@n='integration']" att1="state" v1='hidden'/> 
+            <dependencies value='INTERFACE_LINE_2D' node="../value[@n='integration']" att1="state" v1='normal'/> 
+            <dependencies value='TIMOSHENKO_BEAM_2D' node="../value[@n='integration']" att1="state" v1='normal'/> 
+            <dependencies value='TIMOSHENKO_BEAM_3D' node="../value[@n='integration']" att1="state" v1='normal'/> 
             <dependencies value='TRUSS_2D' node="../value[@n='integration']" att1="state" v1='hidden'/> 
             <dependencies value='TRUSS_3D' node="../value[@n='integration']" att1="state" v1='hidden'/> 
         </value>

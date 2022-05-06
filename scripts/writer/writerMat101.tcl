@@ -83,7 +83,9 @@ proc Writer::WriteNLMM101 {nlmm101} {
         }
         set crack_num [SpdAux::GetNodeValue $child ".//value\[@n='crack_num']"]
         set crack_num [expr int($crack_num)] ; # make sure it is an integer number.
-        set crack_angle [SpdAux::GetNodeValue $child ".//value\[@n='crack_angle']"]
+        set crack_angle_rad [SpdAux::GetNodeValue $child ".//value\[@n='crack_angle']"]
+        set crack_angle [gid_groups_conds::convert_unit_value Angle $crack_angle_rad rad deg]; # convert to degree
+
 
         # Printing data to file...
         if {$Writer::comment} {

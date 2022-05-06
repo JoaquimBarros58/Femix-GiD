@@ -42,7 +42,7 @@
     <value n="load_diagram" pn="Unloading/Reloading diagram" values="SECANT,ELASTIC" v="SECANT" help="Type of unloading/reloading diagram." />
     <value n="crack_band" pn="Crack band width" values="SQRT_ELEMENT,SQRT_IP,OLIVER_ELEMENT,OLIVER_IP" v="SQRT_IP" editable="1" help="Crack band width for the fracture mode I. It can be _SQRT_ELEMENT, _SQRT_IP, _OLIVER_ELEMENT, _OLIVER_IP or a value." />
     <value n="crack_num" pn="Num. of cracks" v="2" help="Maximum n. of cracks." />
-    <value n="crack_angle" pn="Threshold angle" v="30" unit_magnitude="Angle" units="deg" help="Threshold angle." />
+    <value n="crack_angle" pn="Threshold angle" v="30" unit_magnitude="Angle" units="°" help="Threshold angle." />
   </blockdata>
 
   <!-- Columns AC-AI -->

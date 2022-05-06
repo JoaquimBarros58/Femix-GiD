@@ -128,11 +128,10 @@ proc Femix::GetRange {items} {
 # 
 # The numeric value or the allowed word.
 proc Femix::CheckValue {value lst} {
-    set val [String::IsNumeric $value]
-    if {$val != ""} { # is the value a number?...
+    if {[String::IsNumeric $value] != ""} { # is the value a number?...
         return $value
     } else { # or is it a available keyword?
-        if {$val in $lst} {
+        if {$value in $lst} {
             return _$value
         } 
         return _[lindex $lst 0]
@@ -367,5 +366,7 @@ proc Femix::GetPrefsFilePath { } {
         return [file join $dirname .$filename]
     }
 }
+
+
 
 

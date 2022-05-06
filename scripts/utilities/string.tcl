@@ -136,5 +136,12 @@ proc String::GetRange {s} {
     return $v
 }
 
-
+# Replace whitespaces by a character.
+# 
+# @param str A string containing whitespaces.
+# @param c A character to replace the whitespaces, default is _
+# @return A new string without whitespaces.
+proc String::StrSpace {str {c _}} {
+    return [join $str $c]
+}
 

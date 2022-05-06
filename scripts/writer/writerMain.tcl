@@ -1,7 +1,9 @@
 # This procedure writes the main parameters to file.
 proc Writer::MainParameters {} {
     Writer::WriteLine <MAIN_PARAMETERS> 1
-    Writer::WriteLine "MAIN_TITLE = My model ;" 2
+
+    set path {/*/container[@n="main_parameters"]//value[@n="main_title"]}
+    Writer::WriteLine "MAIN_TITLE = [SpdAux::GetValue $path] ;" 2
     Writer::WriteLine
 
     # Analyse type parameters
@@ -58,26 +60,10 @@ proc Writer::MainParameters {} {
         Writer::WriteLine "PATH_BEHAVIOR = [SpdAux::GetTag "$path\[@n = 'path_behavior' \]"] ;" 2
     }
 
-    Writer::WriteLine </MAIN_PARAMETERS> 1
-    Writer::WriteLine
-
     if {$mat == "Yes" && $arc == "Yes"} { 
-        Writer::ArcLength
+        Writer::WriteLine "ARC_LENGTH = _Y ;" 2
     }
-}
 
-proc Writer::ArcLength {} {
-    Writer::WriteLine <ARC_LENGTH_PARAMETERS> 1
-
-    Writer::WriteLine "DISPLACEMENT_CONTROL = _Y ;" 2
-    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'node' \]"
-    Writer::WriteLine "POINT_NUMBER = [SpdAux::GetValue $path] ;" 2
-    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'dof' \]"
-    set dof _[Femix::GetDirectionLabel [SpdAux::GetValue $path]]
-    Writer::WriteLine "DEGREE_OF_FREEDOM = $dof ;" 2
-    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'incr' \]"
-    Writer::WriteLine "DISPLACEMENT_INCREMENT = [SpdAux::GetValue $path] ;" 2
-    
-    Writer::WriteLine </ARC_LENGTH_PARAMETERS> 1
+    Writer::WriteLine </MAIN_PARAMETERS> 1
     Writer::WriteLine
 }

@@ -118,7 +118,8 @@ proc Writer::WriteNLMM104 {nlmm104} {
         set crack_band [Femix::CheckValue $crack_band {SQRT_ELEMENT SQRT_IP OLIVER_ELEMENT OLIVER_IP}]
         set crack_num [SpdAux::GetNodeValue $child ".//value\[@n='crack_num']"]
         set crack_num [expr int($crack_num)] ; # make sure it is an integer number.
-        set crack_angle [SpdAux::GetNodeValue $child ".//value\[@n='crack_angle']"]
+        set crack_angle_rad [SpdAux::GetNodeValue $child ".//value\[@n='crack_angle']"]
+        set crack_angle [gid_groups_conds::convert_unit_value Angle $crack_angle_rad rad deg]; # convert to degree
         # Out-of-plane Shear data. Columns AC-AI
         set out_diag _[SpdAux::GetNodeValue $child ".//value\[@n='out_diagram']"]
         set out_stress [SpdAux::GetNodeValue $child ".//value\[@n='out_stress']"]
