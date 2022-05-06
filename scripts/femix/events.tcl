@@ -235,6 +235,7 @@ proc Event::ImportPva {} {
 # This event is dispatched when the user clicks on the menu Femix->Test.
 # This menu is only available in dev mode.
 proc Event::Debug {} {
+    WarnWin "Hello world"
 }
 
 proc Event::ModifyPreferencesWindow { root } {

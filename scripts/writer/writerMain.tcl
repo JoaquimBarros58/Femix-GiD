@@ -1,7 +1,9 @@
 # This procedure writes the main parameters to file.
 proc Writer::MainParameters {} {
     Writer::WriteLine <MAIN_PARAMETERS> 1
-    Writer::WriteLine "MAIN_TITLE = My model ;" 2
+
+    set path {/*/container[@n="main_parameters"]//value[@n="main_title"]}
+    Writer::WriteLine "MAIN_TITLE = [SpdAux::GetValue $path] ;" 2
     Writer::WriteLine
 
     # Analyse type parameters

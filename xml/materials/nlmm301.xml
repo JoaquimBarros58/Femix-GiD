@@ -9,5 +9,5 @@
     <value n="tm" pn="tm" v="3.0" unit_magnitude="P" units="MPa" help="Peak bond stress." />
     <value n="a" pn="α" v="0.9" help="Parameter used in the definition of the pre-peak bond stress-slip relationship." />
     <value n="b" pn="β" v="2.0" help="Parameter used in the definition of the post-peak bond stress-slip relationship." />
-    <value n="kn" pn="Kn" v="1.0e6" unit_magnitude="P" units="MPa" help="Normal stiffness." />
+    <value n="kn" pn="Kn" v="1.0e6" unit_magnitude="F/L" units="N/mm" help="Normal stiffness." />
 </blockdata>

@@ -30,7 +30,7 @@
         <container n="basic_units" pn="Basic units" icon="units" state="normal">
             <value n="units_length" pn="Length" unit_definition="L" />
             <value n="units_mass" pn="Mass" unit_definition="M" />
-            <value n="units_force" pn="Force" unit_definition="F" />
+            <value n="units_force" pn="Force" unit_definition="F" default="kN" />
             <value n="units_pressure" pn="Pressure" unit_definition="P" />
             <value n="units_temperature" pn="Temperature" unit_definition="Temp" />
             <value n="units_time" pn="Time" unit_definition="T" />

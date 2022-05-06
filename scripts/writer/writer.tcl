@@ -13,6 +13,7 @@ namespace eval Writer {
     variable listGeom;    # List of used geomtries.
     variable listRule;    # List of used integration rules.
     variable arrElem;     # Array of elements
+    variable arrElemInt;  # Array of interface elements
 
     # Format
     # -------
@@ -116,6 +117,27 @@ proc Writer::Groups {} {
     WriteLine "</GROUP_NAMES>\n" 2
 }
 
+# Prints the arc length block
+proc Writer::ArcLength {} {
+    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'activate' \]"
+    set arc [SpdAux::GetValue $path]
+    if {$arc == "No"} { return }
+
+    Writer::WriteLine <ARC_LENGTH_PARAMETERS> 1
+
+    Writer::WriteLine "DISPLACEMENT_CONTROL = _Y ;" 2
+    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'node' \]"
+    Writer::WriteLine "POINT_NUMBER = [SpdAux::GetValue $path] ;" 2
+    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'dof' \]"
+    set dof _[Femix::GetDirectionLabel [SpdAux::GetValue $path]]
+    Writer::WriteLine "DEGREE_OF_FREEDOM = $dof ;" 2
+    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'incr' \]"
+    Writer::WriteLine "DISPLACEMENT_INCREMENT = [SpdAux::GetValue $path] ;" 2
+    
+    Writer::WriteLine </ARC_LENGTH_PARAMETERS> 1
+    Writer::WriteLine
+}
+
 # Writes the nodes coordinates block.
 proc Writer::Nodes {} {
     variable fg ; variable fi ; variable fs
@@ -187,10 +209,16 @@ proc Writer::Init {filename} {
         unset Writer::arrElem
     }
     global Writer::arrElem
+    if {[array size Writer::arrElemInt] > 0} {
+        unset Writer::arrElemInt
+    }
+    global Writer::arrElemInt
 
     Writer::Parts 1
     Writer::Parts 2
     Writer::Parts 3
+
+    Writer::InterfaceElements
 }
 
 # Inits the list of elements. Basically, this procedure gets all groups from
@@ -249,24 +277,84 @@ proc Writer::Parts {part} {
         # Populating the element array
         foreach id $elGroup {
             # Get the element connectivities.
-            # It converts from gid to femix before saving.
+            # It converts from gid numbering order to femix numbering order before saving.
             set elConn [Femix::GetConn $id]
 
-            # Store data into the elements dictionary.
-            # Dictionary specs:
-            # -----------------
-            # part: Element part, it can be 1, 2 or 3.
-            # id: Element id.
-            # conn: connectivity list.
-            # type: linear or quadratic.
-            # mat_name: Material name.
-            # geom: Element geometry.
-            # group: Element group.
-            # rule: Element rule.
-            set Writer::arrElem($id) [dict create part $part id $id conn $elConn \
-                    type $elTypeName mat_name $elMatName \
-                    geom $elGeom group [join $grpName _] rule $elRule]
+            # Save interface elements to a different array to avoid overwriting existing elements. 
+            # This will happen when interface elements are assigned to existing elements.
+            # This array needs to be merged to the arrElem array later on.
+            if {$elTypeName == {INTERFACE_LINE_2D} && $part == 1} {
+                set Writer::arrElemInt($id) [dict create part $part id $id conn $elConn \
+                type $elTypeName mat_name $elMatName \
+                geom $elGeom group [join $grpName _] rule $elRule] 
+            } else {
+                # Store data into the elements dictionary.
+                # Dictionary specs:
+                # -----------------
+                # part: Element part, it can be 1, 2 or 3.
+                # id: Element id.
+                # conn: connectivity list.
+                # type: linear or quadratic.
+                # mat_name: Material name.
+                # geom: Element geometry.
+                # group: Element group.
+                # rule: Element rule.
+                set Writer::arrElem($id) [dict create part $part id $id conn $elConn \
+                        type $elTypeName mat_name $elMatName \
+                        geom $elGeom group [join $grpName _] rule $elRule] 
+            }
         }
+    }
+}
+
+# Merge the array of interface elements into the element array. 
+# Note that the new elements added to the element array will have 
+# a new id to avoid overwriting existing elements.
+proc Writer::InterfaceElements {} {
+    set ne [array size Writer::arrElem]
+    foreach index [array names Writer::arrElemInt] {
+        dict set Writer::arrElemInt($index) id [incr ne]
+        set conn [Writer::CreateInterElement $Writer::arrElemInt($index)]
+        dict set Writer::arrElemInt($index) conn $conn
+        set Writer::arrElem($ne) $Writer::arrElemInt($index)
+    }
+}
+
+# Create the interface elements. 
+# This function will take the nodes of the given element (elem) and 
+# will search into the model's list of nodes the ones which have the same 
+# coordinates as the nodes of the given element. The new nodes will be 
+# added to the given element to build the interface element.
+# 
+# @param elem Element dictionary.
+# @return The connectivities of the interface element.
+proc Writer::CreateInterElement {elem} {
+    variable arrElem
+    set econn [dict get $elem conn]; # element connections
+    set nn [GiD_Info Mesh MaxNumNodes]; # number of nodes
+    set newIds []
+    
+    # Checks if the node of the current element is equal to a node of nn list.
+    for {set i 0} {$i < [llength $econn]} {incr i} {
+        set found 0
+        set count 1
+        set eid [lindex $econn $i]
+        set exyz [GiD_Mesh get node $eid]
+        
+        while {$count <= $nn && $found == 0} {
+            set xyz [GiD_Mesh get node $count]
+
+            if {[lindex $xyz 1] == [lindex $exyz 1] && [lindex $xyz 2] == [lindex $exyz 2] && [lindex $xyz 3] == [lindex $exyz 3] && $count != $eid} {
+                set found 1
+                lappend newIds $count
+            }
+
+            incr count
+        }
+    }
+
+    if {[llength $newIds] > 0} {
+        return [concat $econn $newIds] 
     }
 }
 
@@ -292,25 +380,4 @@ proc Writer::WriteLine {{str ""} {ind 0} {file 1} {c " "}} {
     } else {
         return $s
     }
-}
-
-# Prints the arc length block
-proc Writer::ArcLength {} {
-    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'activate' \]"
-    set arc [SpdAux::GetValue $path]
-    if {$arc == "No"} { return }
-
-    Writer::WriteLine <ARC_LENGTH_PARAMETERS> 1
-
-    Writer::WriteLine "DISPLACEMENT_CONTROL = _Y ;" 2
-    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'node' \]"
-    Writer::WriteLine "POINT_NUMBER = [SpdAux::GetValue $path] ;" 2
-    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'dof' \]"
-    set dof _[Femix::GetDirectionLabel [SpdAux::GetValue $path]]
-    Writer::WriteLine "DEGREE_OF_FREEDOM = $dof ;" 2
-    set path "container\[@n = 'main_parameters' \]/container\[@n = 'arcl' \]/value\[@n = 'incr' \]"
-    Writer::WriteLine "DISPLACEMENT_INCREMENT = [SpdAux::GetValue $path] ;" 2
-    
-    Writer::WriteLine </ARC_LENGTH_PARAMETERS> 1
-    Writer::WriteLine
 }

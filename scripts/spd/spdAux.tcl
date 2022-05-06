@@ -191,8 +191,10 @@ proc SpdAux::GetGeom1D {domNode args} {
     foreach node [$domGeoms childNodes] {
         set name [$node @name] 
         # Gets only cross, frame2d and frame3d geometries.
+        # _LAM_THICK is not a 1D geometry but it will be added becuase of the 
+        # interface 2d element.
         set type [GetNodeValue $node ".//value\[@n='type']"]
-        if {$type == "_CS_AREA" || $type == "_CS_2D" || $type == "_CS_3D"} {
+        if {$type == "_CS_AREA" || $type == "_CS_2D" || $type == "_CS_3D" || $type == "_LAM_THICK"} {
             lappend result [list 0 $name $name $image 1]
         }
     }

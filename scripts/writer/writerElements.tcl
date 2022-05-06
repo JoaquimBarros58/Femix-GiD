@@ -8,11 +8,16 @@
 proc Writer::ElementNodes {} {
     variable arrElem
 
+    # for { set index 1 }  { $index <= [array size Writer::arrElem] }  { incr index } {
+    #     WarnWin $Writer::arrElem($index)
+    # }
+    
     Writer::WriteLine <ELEMENT_NODES> 2
 
+    set ne [array size arrElem]
     if {$Writer::comment} {
         Writer::WriteLine "## Nodes defining the elements" 3
-        Writer::WriteLine "COUNT = [GiD_Info Mesh NumElements] ; # N. of elements" 3
+        Writer::WriteLine "COUNT = $ne ; # N. of elements" 3
         Writer::WriteLine
         Writer::WriteLine "## Content of each column:" 3
         Writer::WriteLine "#  A -> Counter" 3
@@ -20,7 +25,7 @@ proc Writer::ElementNodes {} {
         Writer::WriteLine "#  C -> Nodes of the element" 3
         Writer::WriteLine [format "#%8s  %s  %-s" A B C] 3
     } else {
-        Writer::WriteLine "COUNT = [GiD_Info Mesh NumElements] ;" 3
+        Writer::WriteLine "COUNT = $ne ;" 3
     }
 
     set count 1
@@ -28,17 +33,17 @@ proc Writer::ElementNodes {} {
     # Sorting the array of elements by element id.
     set sorted [lsort -integer -increasing [array names arrElem]]
 
-   
     foreach i $sorted  {
         set e $arrElem($i)
         set etype _[dict get $e type]
         set id [dict get $e id]
         set size [llength [dict get $e conn]]
         set conn [dict get $e conn]
+        set part [dict get $e part]
 
         # If the element is interface 2D we need to change the nodes numbering
         # order.
-        if {$etype == "_INTERFACE_LINE_2D"} {
+        if {$etype == "_INTERFACE_LINE_2D" && $part == 2} {
             if {[Femix::IsQuadratic] == 1} { # quadratic element
                 # Removes middle nodes.
                 set conn [lreplace $conn 3 3]
@@ -143,7 +148,7 @@ proc Writer::ElementProperties {} {
         # Printing element properties...
         set fmt [format " $fi $fs $fi $fs $fs $fs $fs $fs $fs $fs $fs ;\n" \
         $count [lindex $vs 0] 1 $range [lindex $vs 2] [lindex $vs 3] [lindex $vs 4] \
-        [lindex $vs 5] [lindex $vs 6] [lindex $vs 7] [lindex $vs 8]]
+        [lindex $vs 5] [String::StrSpace [lindex $vs 6]] [lindex $vs 7] [lindex $vs 8]]
 
         append lines [Writer::WriteLine $fmt 3 0]
         
@@ -166,7 +171,7 @@ proc Writer::ElementProperties {} {
         Writer::WriteLine "#  H -> Geometry type" 3
         Writer::WriteLine "#  I -> Geometry name" 3
         Writer::WriteLine "#  J -> Integration type (stiffness matrix)" 3
-        Writer::WriteLine "#  K -> Integration name (stiffness matrix" 3
+        Writer::WriteLine "#  K -> Integration name (stiffness matrix)" 3
         Writer::WriteLine [format "#$fs $fs $fs $fs $fs $fs $fs $fs $fs $fs $fs" A B C D E F G H I J K] 3
     } else {
         Writer::WriteLine "COUNT = [expr $count - 1] ;" 3
@@ -254,7 +259,7 @@ proc Writer::ElementPropSingle {} {
         Writer::WriteLine "#  H -> Geometry type" 3
         Writer::WriteLine "#  I -> Geometry name" 3
         Writer::WriteLine "#  J -> Integration type (stiffness matrix)" 3
-        Writer::WriteLine "#  K -> Integration name (stiffness matrix" 3
+        Writer::WriteLine "#  K -> Integration name (stiffness matrix)" 3
         Writer::WriteLine [format "#$fs $fs $fs $fs $fs $fs $fs $fs $fs $fs $fs" A B C D E F G H I J K] 3
     } else {
         Writer::WriteLine "COUNT = [array size arrElem] ;" 3
@@ -308,4 +313,3 @@ proc Writer::ElementPropSingle {} {
  
     Writer::WriteLine "</ELEMENT_PROPERTIES>\n" 2
 }
-
