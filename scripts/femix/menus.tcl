@@ -31,14 +31,6 @@ proc Femix::ChangeMenus {} {
     GiDMenu::InsertOption "Femix" [list "Posfemix..."] [incr pos] PREPOST [list Event::RunExec "posfemix"] "" "" replace =
     # Separator
     GiDMenu::InsertOption "Femix" [list "---"] [incr pos] PREPOST "" "" "" replace = 
-    # Import
-    GiDMenu::InsertOption "Femix" [list "Import" ] [incr pos] PREPOST [list] "" "" replace =
-    GiDMenu::InsertOption "Femix" [list "Import" "PVA..."] 0 PREPOST [list Event::ImportPva] "" "" replace =
-    # Results menu
-    GiDMenu::InsertOption "Femix" [list "Results"] [incr pos] PREPOST "" "" "" insert _
-    GiDMenu::InsertOption "Femix" [list "Results" "Displacement"] 0 PREPOST [list Event::ReadResults "dipva"] "" "" replace =
-    GiDMenu::InsertOption "Femix" [list "Results" "Stress"] 1 PREPOST [list Event::ReadResults "sepva"] "" "" replace =
-    GiDMenu::InsertOption "Femix" [list "Results" "Strain"] 2 PREPOST [list Event::ReadResults "sapva"] "" "" replace =
     # Tools menu
     GiDMenu::InsertOption "Femix" [list "Tools"] [incr pos] PREPOST "" "" "" insert _
     GiDMenu::InsertOption "Femix" [list "Tools" "Write input file"] 0 PREPOST [list Event::WriteInputFile] "" "" replace =
