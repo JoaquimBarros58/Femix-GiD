@@ -42,7 +42,8 @@ proc Writer::MainParameters {} {
         Writer::WriteLine "SYSTEM_LIN_EQ_ALGORITHM = _GAUSS_ELIM ;" 2
     } else { 
         Writer::WriteLine "SYSTEM_LIN_EQ_ALGORITHM = [SpdAux::GetTag "$path\[@n = 'system' \]"] ;" 2
-        Writer::WriteLine "PRECONDITIONED_RESIDUAL_DECAY = [SpdAux::GetTag "$path\[@n = 'decay' \]"] ;" 2
+        Writer::WriteLine "PRECONDITIONED_RESIDUAL_DECAY = [SpdAux::GetValue "$path\[@n = 'decay' \]"] ;" 2
+
         Writer::WriteLine
     }
 
